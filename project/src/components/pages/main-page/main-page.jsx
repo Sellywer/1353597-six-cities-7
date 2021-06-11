@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 import Logo from '../../logo/logo';
 import CardsList from '../card-list/card-list';
 import offersProp from '../../props/offers.prop';
-
+import {AppRoute} from '../../../const';
 
 function MainPage(props) {
 
@@ -21,11 +22,11 @@ function MainPage(props) {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="favotites">
+                  <Link to={AppRoute.FAVORITES} className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#signout">
