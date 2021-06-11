@@ -5,7 +5,7 @@ export default PropTypes.shape({
   date: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
-  host: PropTypes.shape({
+  user: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     isPro: PropTypes.bool.isRequired,

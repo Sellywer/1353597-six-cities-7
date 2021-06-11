@@ -9,12 +9,12 @@ import PageLogin from '../pages/page-login/page-login';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 
 import offersProp from '../props/offers.prop';
-// import reviewsProp from '../props/reviews.prop';
+import reviewsProp from '../props/reviews.prop';
 
 import {AppRoute} from '../../const';
 
 function App(props) {
-  const {offers} = props;
+  const {offers, reviews} = props;
 
   return (
     <BrowserRouter>
@@ -29,7 +29,7 @@ function App(props) {
           <PageFavorites offers={offers} />
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <PageRoom offers={offers} />
+          <PageRoom offers={offers} reviews={reviews} />
         </Route>
         <Route>
           <PageNotFound />
@@ -42,6 +42,8 @@ function App(props) {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
+  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
+
 };
 
 export default App;
