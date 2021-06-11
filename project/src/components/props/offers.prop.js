@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const offer = PropTypes.shape({
+export default PropTypes.shape({
   bedrooms: PropTypes.number.isRequired,
   city: PropTypes.shape({
     location: PropTypes.shape({
@@ -9,7 +9,7 @@ export const offer = PropTypes.shape({
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   description: PropTypes.string.isRequired,
   goods: PropTypes.arrayOf(
     PropTypes.string.isRequired,

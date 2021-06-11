@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PlaceCard from '../place-card/place-card';
+
+import Logo from '../../logo/logo';
+import CardsList from '../card-list/card-list';
+import offersProp from '../../props/offers.prop';
+
 
 function MainPage(props) {
 
-  const {cardsCount} = props;
-  let index = 0;
-  const placesOffers = new Array(cardsCount).fill(null).map(() => {
-    index++;
-    return (<PlaceCard key={index}/>);
-  });
+  const {offers} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -17,9 +16,7 @@ function MainPage(props) {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active" href="#logo">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" style={{width: '81', height: '41'}} />
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -92,7 +89,7 @@ function MainPage(props) {
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
-                <ul className="places__options places__options--custom places__options--opened">
+                <ul className="places__options places__options--custom places__options--opene">
                   <li className="places__option places__option--active" tabIndex="0">Popular</li>
                   <li className="places__option" tabIndex="0">Price: low to high</li>
                   <li className="places__option" tabIndex="0">Price: high to low</li>
@@ -100,7 +97,7 @@ function MainPage(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {placesOffers}
+                <CardsList offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">
@@ -114,7 +111,7 @@ function MainPage(props) {
 }
 
 MainPage.propTypes = {
-  cardsCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersProp).isRequired,
 };
 
 export default MainPage;

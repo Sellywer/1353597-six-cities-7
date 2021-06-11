@@ -1,3 +1,5 @@
+const AVATAR_URL = 'https://i.pravatar.cc/128';
+
 const reviews = [
   {
     comment: 'Vacation or business trip, no matter where you go, be sure, it is much more convenient to reside in a good hotel than look for a flat, a room or a hostel. If you prefer comfort and modern conveniences, hotels are the best choice.',
@@ -5,7 +7,7 @@ const reviews = [
     id: 1,
     rating: 5,
     user: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 4,
       isPro: true,
       name: 'Mike',
@@ -18,7 +20,7 @@ const reviews = [
     id: 2,
     rating: 3,
     user: {
-      avatarUrl: 'img/2.png',
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 3,
       isPro: true,
       name: 'Max',
@@ -31,7 +33,7 @@ const reviews = [
     id: 3,
     rating: 5,
     user: {
-      avatarUrl: 'img/3.png',
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 2,
       isPro: false,
       name: 'Sheldon',
@@ -44,7 +46,7 @@ const reviews = [
     id: 4,
     rating: 5,
     user: {
-      avatarUrl: 'img/4.png',
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 1,
       isPro: false,
       name: 'Kristina',
@@ -57,7 +59,7 @@ const reviews = [
     id: 5,
     rating: 4,
     user: {
-      avatarUrl: 'img/5.png',
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 6,
       isPro: true,
       name: 'Sheila',
@@ -70,7 +72,7 @@ const reviews = [
     id: 6,
     rating: 3,
     user: {
-      avatarUrl: 'img/6.png',
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 7,
       isPro: true,
       name: 'Adel',
@@ -83,7 +85,7 @@ const reviews = [
     id: 7,
     rating: 4,
     user: {
-      avatarUrl: 'img/7.png',
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 8,
       isPro: false,
       name: 'John',
