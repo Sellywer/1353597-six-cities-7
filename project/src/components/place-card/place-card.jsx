@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, generatePath} from 'react-router-dom';
 
 import offersProp from '../props/offers.prop';
@@ -7,7 +7,7 @@ import {AppRoute} from '../../const';
 
 const calcRatingInPercent = (rating) => `${rating / 5 * 100}%`;
 
-function PlaceCard({ offer }) {
+function PlaceCard({offer}, setActiveCard = () => {}) {
   const {
     id,
     price,
@@ -18,8 +18,20 @@ function PlaceCard({ offer }) {
     isFavorite,
   } = offer;
 
+  const [activeOffer, setActivateOffer] = useState({});
+
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card"
+      onMouseEnter={() => {
+        setActivateOffer({
+          ...activeOffer,
+          ...offer,
+        });
+      }}
+      onMouseLeave={() => {
+        setActivateOffer({});
+      }}
+    >
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>

@@ -11,7 +11,7 @@ function ReviewForm() {
   };
 
   const handleFieldChange = (evt) => {
-    const { name, value } = evt.target;
+    const {name, value} = evt.target;
     setReview((prevState) => ({ ...prevState, [name]: value }));
   };
 

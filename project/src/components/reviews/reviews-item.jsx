@@ -7,6 +7,11 @@ function ReviewsItem(props) {
 
   const {review} = props;
 
+  const reviewDate = new Date(review.date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+  });
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -27,7 +32,7 @@ function ReviewsItem(props) {
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime={review.data}>{review.data} April 2019</time>
+        <time className="reviews__time" dateTime={review.data}>{reviewDate}</time>
       </div>
     </li>
   );
