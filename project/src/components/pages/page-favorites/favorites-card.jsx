@@ -3,7 +3,7 @@ import {Link, generatePath} from 'react-router-dom';
 import {AppRoute} from '../../../const';
 import offersProp from '../../props/offers.prop';
 
-const calcRatingInPercent = (rating) => `${rating / 5 * 100}%`;
+import {calcRatingInPercent} from '../../../utils';
 
 function FavoriteCard({offer}) {
 

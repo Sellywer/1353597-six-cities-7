@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import RewiewProp from '../props/reviews.prop';
 import ReviewsItem from './reviews-item';
 
-
 function ReviewsList(props) {
 
   const {reviews} = props;

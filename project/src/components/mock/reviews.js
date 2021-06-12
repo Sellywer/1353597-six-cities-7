@@ -1,3 +1,4 @@
+import {getRandomArray} from '../../utils';
 const AVATAR_URL = 'https://i.pravatar.cc/128';
 
 const reviews = [
@@ -93,4 +94,6 @@ const reviews = [
   },
 ];
 
-export default reviews;
+const review = getRandomArray(reviews, 1, 10);
+
+export default review;

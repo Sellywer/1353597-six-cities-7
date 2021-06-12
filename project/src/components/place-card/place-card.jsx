@@ -5,7 +5,7 @@ import offersProp from '../props/offers.prop';
 
 import {AppRoute} from '../../const';
 
-const calcRatingInPercent = (rating) => `${rating / 5 * 100}%`;
+import {calcRatingInPercent} from '../../utils';
 
 function PlaceCard({offer}, setActiveCard = () => {}) {
   const {

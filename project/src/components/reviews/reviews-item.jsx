@@ -1,7 +1,7 @@
 import React from 'react';
 import rewiewsProp from '../props/reviews.prop';
 
-const calcRatingInPercent = (rating) => `${rating / 5 * 100}%`;
+import {calcRatingInPercent} from '../../utils';
 
 function ReviewsItem(props) {
 

@@ -10,7 +10,7 @@ import ReviewForm from '../../reviews/review-form';
 import offersProp from '../../props/offers.prop';
 import reviewsProp from '../../props/reviews.prop';
 
-const calcRatingInPercent = (rating) => `${rating / 5 * 100}%`;
+import {calcRatingInPercent} from '../../../utils';
 
 function PageRoom(props) {
   const {offers, reviews} = props;
