@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { useLocation } from 'react-router';
 
 
-import Logo from '../../logo/logo';
-import ReviewsList from '../../reviews/reviews-list';
-import ReviewForm from '../../reviews/review-form';
+import Logo from '../../elements/logo/logo';
+import ReviewsList from '../../elements/reviews/reviews-list';
+import ReviewForm from '../../elements/reviews/review-form';
 
-import offersProp from '../../props/offers.prop';
-import reviewsProp from '../../props/reviews.prop';
+import offerProp from '../../props/offer.prop';
+import reviewsProp from '../../props/review.prop';
 
 import {calcRatingInPercent} from '../../../utils';
 
-function PageRoom(props) {
+function Offer(props) {
   const {offers, reviews} = props;
   const location = useLocation();
 
@@ -250,10 +250,10 @@ function PageRoom(props) {
   );
 }
 
-PageRoom.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
+Offer.propTypes = {
+  offers: PropTypes.arrayOf(offerProp).isRequired,
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
 
 };
 
-export default PageRoom;
+export default Offer;

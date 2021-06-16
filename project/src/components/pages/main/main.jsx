@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-import Logo from '../../logo/logo';
-import CardsList from '../card-list/card-list';
-import offersProp from '../../props/offers.prop';
+import Logo from '../../elements/logo/logo';
+import CardList from '../card-list/card-list';
+import offerProp from '../../props/offer.prop';
 import {AppRoute} from '../../../const';
 
-function MainPage(props) {
+function Main(props) {
 
   const {offers} = props;
 
@@ -98,7 +98,7 @@ function MainPage(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CardsList offers={offers} />
+                <CardList offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">
@@ -111,8 +111,8 @@ function MainPage(props) {
   );
 }
 
-MainPage.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
+Main.propTypes = {
+  offers: PropTypes.arrayOf(offerProp).isRequired,
 };
 
-export default MainPage;
+export default Main;

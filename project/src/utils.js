@@ -13,14 +13,14 @@ export const shuffle = (array) => {
 };
 
 export const getRandomArray = (array, min, max) => {
-
-  shuffle(array);
+  const copyArray = array.slice();
+  shuffle(copyArray);
 
   const arrayLength = getRandomInteger(min, max);
 
   const newArray = [];
   for (let i = 0; i < arrayLength; i++) {
-    newArray.push(array[i]);
+    newArray.push(copyArray[i]);
   }
   return newArray;
 };

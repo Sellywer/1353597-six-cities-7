@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, generatePath} from 'react-router-dom';
 import {AppRoute} from '../../../const';
-import offersProp from '../../props/offers.prop';
+import offerProp from '../../props/offer.prop';
 
 import {calcRatingInPercent} from '../../../utils';
 
@@ -45,7 +45,7 @@ function FavoriteCard({offer}) {
 }
 
 FavoriteCard.propTypes = {
-  offer: offersProp,
+  offer: offerProp,
 };
 
 export default FavoriteCard;

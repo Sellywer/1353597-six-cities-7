@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import PlaceCard from '../../place-card/place-card';
-import offersProp from '../../props/offers.prop';
+import PlaceCard from '../../elements/place-card/place-card';
+import offerProp from '../../props/offer.prop';
 
-function CardsList(props) {
+function CardList(props) {
   const {offers} = props;
 
   return (
@@ -14,8 +14,8 @@ function CardsList(props) {
   );
 }
 
-CardsList.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
+CardList.propTypes = {
+  offers: PropTypes.arrayOf(offerProp).isRequired,
 };
 
-export default CardsList;
+export default CardList;

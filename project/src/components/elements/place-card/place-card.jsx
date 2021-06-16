@@ -1,11 +1,15 @@
 import React, {useState} from 'react';
 import {Link, generatePath} from 'react-router-dom';
 
-import offersProp from '../props/offers.prop';
+import offerProp from '../../props/offer.prop';
 
-import {AppRoute} from '../../const';
+import {AppRoute} from '../../../const';
 
-import {calcRatingInPercent} from '../../utils';
+import {calcRatingInPercent} from '../../../utils';
+
+const SteelBlue = '#4481c3';
+const Nobel = '#979797';
+
 
 function PlaceCard({offer}, setActiveCard = () => {}) {
   const {
@@ -51,8 +55,8 @@ function PlaceCard({offer}, setActiveCard = () => {}) {
             <svg className="place-card__bookmark-icon"
               style={{
                 width: '18', height: '19',
-                fill: `${isFavorite && '#4481c3'}`,
-                stroke: `${isFavorite ? '#4481c3' : '#979797'}`,
+                fill: `${isFavorite && SteelBlue}`,
+                stroke: `${isFavorite ? SteelBlue : Nobel}`,
               }}
             >
               <use xlinkHref="#icon-bookmark"></use>
@@ -78,7 +82,7 @@ function PlaceCard({offer}, setActiveCard = () => {}) {
 }
 
 PlaceCard.propTypes = {
-  offer: offersProp,
+  offer: offerProp,
 };
 
 export default PlaceCard;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import offersProp from '../../props/offers.prop';
+import offerProp from '../../props/offer.prop';
 import FavoritesItem from './favorites-item';
 
 function FavoritesList(props) {
@@ -9,11 +9,8 @@ function FavoritesList(props) {
   const {offers} = props;
 
   const favoritesOffers = offers.filter((item) => item.isFavorite);
-  const uniqueCities = new Set();
 
-  favoritesOffers.forEach((item) => uniqueCities.add(item.city.name));
-
-  const favoritesCities = [...uniqueCities.values()];
+  const favoritesCities = [...new Set(favoritesOffers.map((item) => item.city.name))];
 
   return (
     <ul className="favorites__list">
@@ -29,7 +26,7 @@ function FavoritesList(props) {
 }
 
 FavoritesList.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
+  offers: PropTypes.arrayOf(offerProp).isRequired,
 };
 
 export default FavoritesList;

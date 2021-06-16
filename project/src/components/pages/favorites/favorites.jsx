@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import offersProp from '../../props/offers.prop';
+import offerProp from '../../props/offer.prop';
 
-import Logo from '../../logo/logo';
-import FavoritesList from './favorites-list';
+import Logo from '../../elements/logo/logo';
+import FavoritesList from '../../elements/favorites/favorites-list';
 
 function PageFavorites(props) {
 
@@ -51,7 +51,7 @@ function PageFavorites(props) {
 }
 
 PageFavorites.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
+  offers: PropTypes.arrayOf(offerProp).isRequired,
 };
 
 export default PageFavorites;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RewiewProp from '../props/reviews.prop';
-import ReviewsItem from './reviews-item';
+import RewiewProp from '../../props/review.prop';
+import ReviewItem from './review-item';
 
 function ReviewsList(props) {
 
@@ -9,9 +9,7 @@ function ReviewsList(props) {
 
   return (
     <ul className="reviews__list">
-      {reviews.map((item) => (
-        <ReviewsItem key={item.id} review={item} />
-      ))}
+      {reviews.map((item) => (<ReviewItem key={item.id} review={item}/>))}
     </ul>
   );
 }

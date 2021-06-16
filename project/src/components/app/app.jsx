@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
-import MainPage from '../pages/main-page/main-page';
-import PageFavorites from '../pages/page-favorites/page-favorites';
-import PageRoom from '../pages/page-room/page-room';
-import PageLogin from '../pages/page-login/page-login';
+import Main from '../pages/main/main';
+import PageFavorites from '../pages/favorites/favorites';
+import Offer from '../pages/offer/offer';
+import Login from '../pages/login/login';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 
-import offersProp from '../props/offers.prop';
-import reviewsProp from '../props/reviews.prop';
+import offerProp from '../props/offer.prop';
+import reviewProp from '../props/review.prop';
 
 import {AppRoute} from '../../const';
 
@@ -20,16 +20,16 @@ function App(props) {
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <MainPage offers={offers} />
+          <Main offers={offers} />
         </Route>
         <Route exact path={AppRoute.SIGN_IN}>
-          <PageLogin />
+          <Login />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
           <PageFavorites offers={offers} />
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <PageRoom offers={offers} reviews={reviews} />
+          <Offer offers={offers} reviews={reviews} />
         </Route>
         <Route>
           <PageNotFound />
@@ -41,8 +41,8 @@ function App(props) {
 }
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
+  offers: PropTypes.arrayOf(offerProp).isRequired,
+  reviews: PropTypes.arrayOf(reviewProp).isRequired,
 
 };
 
