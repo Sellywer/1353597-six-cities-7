@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Logo from '../logo/logo';
+import Logo from '../../elements/logo/logo';
 
-function PageLogin() {
+function Login() {
 
   return (
     <div className="page page--gray page--login">
@@ -55,4 +55,4 @@ function PageLogin() {
   );
 }
 
-export default PageLogin;
+export default Login;

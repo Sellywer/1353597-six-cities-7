@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PlaceCard from '../place-card/place-card';
+import {Link} from 'react-router-dom';
 
-function MainPage(props) {
+import Logo from '../../elements/logo/logo';
+import CardList from '../card-list/card-list';
+import offerProp from '../../props/offer.prop';
+import {AppRoute} from '../../../const';
 
-  const {cardsCount} = props;
-  let index = 0;
-  const placesOffers = new Array(cardsCount).fill(null).map(() => {
-    index++;
-    return (<PlaceCard key={index}/>);
-  });
+function Main(props) {
+
+  const {offers} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -17,18 +17,16 @@ function MainPage(props) {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active" href="#logo">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" style={{width: '81', height: '41'}} />
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#nav">
+                  <Link to={AppRoute.FAVORITES} className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#signout">
@@ -92,7 +90,7 @@ function MainPage(props) {
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
-                <ul className="places__options places__options--custom places__options--opened">
+                <ul className="places__options places__options--custom places__options--opene">
                   <li className="places__option places__option--active" tabIndex="0">Popular</li>
                   <li className="places__option" tabIndex="0">Price: low to high</li>
                   <li className="places__option" tabIndex="0">Price: high to low</li>
@@ -100,7 +98,7 @@ function MainPage(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {placesOffers}
+                <CardList offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">
@@ -113,8 +111,8 @@ function MainPage(props) {
   );
 }
 
-MainPage.propTypes = {
-  cardsCount: PropTypes.number.isRequired,
+Main.propTypes = {
+  offers: PropTypes.arrayOf(offerProp).isRequired,
 };
 
-export default MainPage;
+export default Main;

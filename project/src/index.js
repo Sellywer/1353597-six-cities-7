@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-
-const Setting = {
-  CARDS_COUNT: 5,
-};
+import offers from './mock/offers';
+import review from './mock/reviews';
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      cardsCount={Setting.CARDS_COUNT}
+      offers={offers}
+      reviews={review}
     />
   </React.StrictMode>,
   document.getElementById('root'));

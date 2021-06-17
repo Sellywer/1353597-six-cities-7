@@ -2,44 +2,48 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
-import MainPage from '../main-page/main-page';
-import PageFavorites from '../page-favorites/page-favorites';
-import PageOfferProperty from '../page-offer-property/page-offer-property';
-import PageLogin from '../page-login/page-login';
-import PageNotFound from '../page-not-found/page-not-found';
+import Main from '../pages/main/main';
+import PageFavorites from '../pages/favorites/favorites';
+import Offer from '../pages/offer/offer';
+import Login from '../pages/login/login';
+import PageNotFound from '../pages/page-not-found/page-not-found';
+
+import offerProp from '../props/offer.prop';
+import reviewProp from '../props/review.prop';
 
 import {AppRoute} from '../../const';
 
 function App(props) {
-  const {cardsCount} = props;
+  const {offers, reviews} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <MainPage
-            cardsCount={cardsCount}
-          />
+          <Main offers={offers} />
         </Route>
         <Route exact path={AppRoute.SIGN_IN}>
-          <PageLogin />
+          <Login />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <PageFavorites />
+          <PageFavorites offers={offers} />
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <PageOfferProperty />
+          <Offer offers={offers} reviews={reviews} />
         </Route>
         <Route>
           <PageNotFound />
         </Route>
+
       </Switch>
     </BrowserRouter>
   );
 }
 
 App.propTypes = {
-  cardsCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offerProp).isRequired,
+  reviews: PropTypes.arrayOf(reviewProp).isRequired,
+
 };
 
 export default App;
