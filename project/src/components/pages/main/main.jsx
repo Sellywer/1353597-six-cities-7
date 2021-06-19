@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 import Logo from '../../elements/logo/logo';
+import Map from '../../map/map';
 import CardList from '../card-list/card-list';
 import offerProp from '../../props/offer.prop';
 import {AppRoute} from '../../../const';
@@ -102,7 +103,9 @@ function Main(props) {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map offers={offers} city={offers[0].city}/>
+              </section>
             </div>
           </div>
         </div>
