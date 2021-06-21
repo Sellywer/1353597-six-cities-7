@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import offerProp from '../../props/offer.prop';
 
-import FavoriteCard from './favorite-card';
+import PlaceCard from './../place-card/place-card';
+
+import {CardTypes} from '../../../const';
 
 function FavoritesItem(props) {
 
@@ -21,7 +23,8 @@ function FavoritesItem(props) {
         </div>
       </div>
       <div className="favorites__places">
-        {offers.map((item) => (<FavoriteCard key={item.id} offer={item} />))}
+        {offers.map((item) => (
+          <PlaceCard key={item.id} offer={item} cardType={CardTypes['FAVORITES_PAGE']}/>))}
       </div>
     </li>
   );

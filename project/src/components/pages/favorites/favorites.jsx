@@ -10,6 +10,11 @@ function PageFavorites(props) {
 
   const {offers} = props;
 
+  const favoritesOffers = offers.filter((item) => item.isFavorite);
+
+  const favoritesCities = [...new Set(favoritesOffers.map((item) => item.city.name))];
+
+
   return (
     <div className="page">
       <header className="header">
@@ -42,7 +47,7 @@ function PageFavorites(props) {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList offers={offers}/>
+            <FavoritesList favoritesCities={favoritesCities} favoritesOffers={favoritesOffers}/>
           </section>
         </div>
       </main>

@@ -6,11 +6,7 @@ import FavoritesItem from './favorites-item';
 
 function FavoritesList(props) {
 
-  const {offers} = props;
-
-  const favoritesOffers = offers.filter((item) => item.isFavorite);
-
-  const favoritesCities = [...new Set(favoritesOffers.map((item) => item.city.name))];
+  const {favoritesOffers, favoritesCities} = props;
 
   return (
     <ul className="favorites__list">
@@ -26,7 +22,8 @@ function FavoritesList(props) {
 }
 
 FavoritesList.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
+  favoritesOffers: PropTypes.arrayOf(offerProp).isRequired,
+  favoritesCities: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
 export default FavoritesList;
