@@ -5,7 +5,7 @@ export const AppRoute = {
   ROOM: '/offer/:id',
 };
 
-export const CardTypes = {
+export const CardType = {
   MAIN_PAGE: {
     articleClassName: 'cities__place-card',
     imgWrapperClassName: 'cities__image-wrapper',
@@ -31,3 +31,5 @@ export const CardTypes = {
     imgHeight: '200',
   },
 };
+
+export const QUANTITY_OF_OFFERS_NEARBY = 3;

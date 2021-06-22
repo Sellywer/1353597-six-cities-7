@@ -13,13 +13,14 @@ import offerProp from '../../props/offer.prop';
 import reviewsProp from '../../props/review.prop';
 
 import {calcRatingInPercent} from '../../../utils';
+import {QUANTITY_OF_OFFERS_NEARBY} from '../../../const';
 
 function Offer(props) {
   const {offers, reviews} = props;
   const location = useLocation();
 
   const offer = offers.find((item) => item.id === location.state);
-  const nearOffers = offers.filter((item) => item !== offer).slice(0, 3);
+  const nearOffers = offers.filter((item) => item !== offer).slice(0, QUANTITY_OF_OFFERS_NEARBY);
 
   const [activeCard, setActiveCard] = useState(offer);
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PlaceCard from '../../elements/place-card/place-card';
-import {CardTypes} from '../../../const';
+import {CardType} from '../../../const';
 import offerProp from '../../props/offer.prop';
 
 function CardList(props) {
@@ -13,12 +13,12 @@ function CardList(props) {
       ? 'cities__places-list places__list tabs__content'
       : 'near-places__list places__list'}
     >
-      {offers.map((item) => (
+      {offers.map((offer) => (
         <PlaceCard
           isMainPage={isMainPage}
-          key={item.id}
-          offer={item}
-          cardType={CardTypes[`${isMainPage ? 'MAIN_PAGE' : 'ROOM_PAGE'}`]}
+          key={offer.id}
+          offer={offer}
+          cardType={CardType[`${isMainPage ? 'MAIN_PAGE' : 'ROOM_PAGE'}`]}
         />))}
     </div>
   );
