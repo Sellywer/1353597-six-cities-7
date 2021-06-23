@@ -33,3 +33,12 @@ export const CardType = {
 };
 
 export const QUANTITY_OF_OFFERS_NEARBY = 3;
+
+export const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
