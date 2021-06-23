@@ -1,5 +1,5 @@
 import {ActionType} from './action';
-import offers from '../mocks/offers';
+import offers from '../mock/offers';
 
 const DEFAULT_CITY = 'Paris';
 

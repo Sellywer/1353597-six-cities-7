@@ -1,14 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
 import App from './components/app/app';
 import offers from './mock/offers';
-import review from './mock/reviews';
+import reviews from './mock/reviews';
+import {reducer} from './store/reducer';
+
+const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App
-      offers={offers}
-      reviews={review}
-    />
+    <Provider store={store}>
+      <App
+        offers={offers}
+        reviews={reviews}
+      />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
