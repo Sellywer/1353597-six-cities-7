@@ -16,6 +16,7 @@ import {AppRoute} from '../../const';
 function App(props) {
   const {offers, reviews} = props;
 
+
   return (
     <BrowserRouter>
       <Switch>

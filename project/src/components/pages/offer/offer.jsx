@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router';
+import { connect } from 'react-redux';
 
 import Map from '../../map/map';
 import Logo from '../../elements/logo/logo';
@@ -13,21 +14,16 @@ import offerProp from '../../props/offer.prop';
 import reviewsProp from '../../props/review.prop';
 
 import {calcRatingInPercent} from '../../../utils';
-import {QUANTITY_OF_OFFERS_NEARBY} from '../../../const';
+import {QUANTITY_OF_OFFERS_NEARBY, CardType} from '../../../const';
 
 function Offer(props) {
+
   const {offers, reviews} = props;
+
   const location = useLocation();
 
   const offer = offers.find((item) => item.id === location.state);
   const nearOffers = offers.filter((item) => item !== offer).slice(0, QUANTITY_OF_OFFERS_NEARBY);
-
-  const [activeCard, setActiveCard] = useState(offer);
-
-  const onCardHover = (cardId) => {
-    const currentCard = offers.find((item) => item.id === Number(cardId));
-    setActiveCard(currentCard);
-  };
 
   return (
     <div className="page">
@@ -147,13 +143,12 @@ function Offer(props) {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews} />
-
                 <ReviewForm />
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map city={offers[0].city} offers={nearOffers} activeCard={activeCard}/>
+            <Map city={offers[0].city} offers={nearOffers}/>
           </section>
         </section>
         <div className="container">
@@ -161,8 +156,7 @@ function Offer(props) {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CardList
               offers={nearOffers}
-              onMouseEnter={onCardHover}
-              onMouseLeave={() => setActiveCard(offer)}
+              CardType={CardType.ROOM_PAGE}
             />
           </section>
         </div>
@@ -174,7 +168,11 @@ function Offer(props) {
 Offer.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
-
 };
 
-export default Offer;
+const mapStateToProps = ({ offers, review }) => ({
+  offers,
+  review,
+});
+
+export default connect(mapStateToProps)(Offer);
