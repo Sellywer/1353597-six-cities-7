@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import MainEmpty from '../../elements/main-empty/main-empty';
-import Logo from '../../elements/logo/logo';
+import Header from '../../elements/header/header';
 import Map from '../../map/map';
 import CardList from '../card-list/card-list';
 import CitiesList from '../../elements/cities-list/cities-list';
 import offerProp from '../../props/offer.prop';
-import {AppRoute, CITIES} from '../../../const';
+import {CITIES} from '../../../const';
 
 function Main(props) {
 
@@ -21,32 +20,7 @@ function Main(props) {
 
   return (
     <div className="page page--gray page--main">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link to={AppRoute.FAVORITES} className="header__nav-link header__nav-link--profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#signout">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
