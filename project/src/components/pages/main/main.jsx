@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -7,14 +7,30 @@ import Header from '../../elements/header/header';
 import Map from '../../map/map';
 import CardList from '../card-list/card-list';
 import CitiesList from '../../elements/cities-list/cities-list';
-import SortingForm from '../../elements/sorting/sort-form';
+import SortForm from '../../elements/sort-form/sort-form';
 import offerProp from '../../props/offer.prop';
-import {CITIES} from '../../../const';
+import {CITIES, SortType} from '../../../const';
 
 function Main(props) {
 
   const {offers, city} = props;
-  const offersForCity = offers.filter((item) => item.city.name === city);
+  const [ sortType, setSortType ] = useState(SortType.POPULAR);
+
+  let offersForCity = offers.filter((o) => o.city.name === city);
+  switch (sortType) {
+    case SortType.LOW_TO_HIGH:
+      offersForCity = offersForCity.sort((a, b) => a.price - b.price);
+      break;
+    case SortType.HIGH_TO_LOW:
+      offersForCity = offersForCity.sort((a, b) => b.price - a.price);
+      break;
+    case SortType.TOP_RATED:
+      offersForCity = offersForCity.sort((a, b) => b.rating - a.rating);
+      break;
+    default:
+      break;
+  }
+
   if (!offers.length) {
     return <MainEmpty locations={CITIES} />;
   }
@@ -36,7 +52,7 @@ function Main(props) {
               <b className="places__found">
                 {offersForCity.length} places to stay in {city}
               </b>
-              <SortingForm />
+              <SortForm initialSorting={sortType} onSortingChange={setSortType}/>
               <div className="cities__places-list places__list tabs__content">
                 <CardList offers={offersForCity} />
               </div>

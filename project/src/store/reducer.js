@@ -6,6 +6,7 @@ const DEFAULT_CITY = 'Paris';
 const initialState = {
   city: DEFAULT_CITY,
   offers: offers,
+  activeCard: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +20,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: action.payload,
+      };
+    case ActionType.HOVER_CARD:
+      return {
+        ...state,
+        activeCard: action.payload,
       };
     default:
       return state;
