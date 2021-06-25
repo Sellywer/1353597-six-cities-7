@@ -10,26 +10,15 @@ import CitiesList from '../../elements/cities-list/cities-list';
 import SortForm from '../../elements/sort-form/sort-form';
 import offerProp from '../../props/offer.prop';
 import {CITIES, SortType} from '../../../const';
+import {sortOffers} from '../../../utils';
+
 
 function Main(props) {
 
   const {offers, city} = props;
   const [ sortType, setSortType ] = useState(SortType.POPULAR);
 
-  let offersForCity = offers.filter((o) => o.city.name === city);
-  switch (sortType) {
-    case SortType.LOW_TO_HIGH:
-      offersForCity = offersForCity.sort((a, b) => a.price - b.price);
-      break;
-    case SortType.HIGH_TO_LOW:
-      offersForCity = offersForCity.sort((a, b) => b.price - a.price);
-      break;
-    case SortType.TOP_RATED:
-      offersForCity = offersForCity.sort((a, b) => b.rating - a.rating);
-      break;
-    default:
-      break;
-  }
+  const offersForCity = sortOffers(sortType, offers).filter((offer) => offer.city.name === city);
 
   if (!offers.length) {
     return <MainEmpty locations={CITIES} />;
