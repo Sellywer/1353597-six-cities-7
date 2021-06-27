@@ -28,7 +28,9 @@ function Map(props) {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    const markers = leaflet.layerGroup();
     if (map) {
+      markers.addTo(map);
       offers.forEach(({ location: { latitude, longitude }, id }) => {
         leaflet
           .marker({
@@ -37,9 +39,13 @@ function Map(props) {
           }, {
             icon: activeCard === id ? currentCustomIcon : defaultCustomIcon,
           })
-          .addTo(map);
+          .addTo(markers);
       });
     }
+    return () => {
+      markers.clearLayers();
+    };
+
   }, [map, offers, activeCard]);
 
   return (
