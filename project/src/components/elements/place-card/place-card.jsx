@@ -28,8 +28,8 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, hoverCard}) {
 
   return (
     <article className={`${articleClassName} place-card`}
-      onMouseEnter={() => cardType === CardType.MAIN_TYPE && hoverCard(id)}
-      onMouseLeave={() => cardType === CardType.MAIN_TYPE && hoverCard(null)}
+      onMouseEnter={() => cardType === CardType.MAIN_PAGE && hoverCard(id)}
+      onMouseLeave={() => cardType === CardType.MAIN_PAGE && hoverCard(null)}
     >
       {isPremium ?
         <div className="place-card__mark">
