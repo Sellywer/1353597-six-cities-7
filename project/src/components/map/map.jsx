@@ -2,6 +2,8 @@ import React, {useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { connect } from 'react-redux';
+
 import offerProp from '../props/offer.prop';
 
 import useMap from '../../hooks/useMap/useMap';
@@ -13,7 +15,6 @@ const defaultCustomIcon = leaflet.icon({
   iconAnchor: [13, 40],
 });
 
-// eslint-disable-next-line no-unused-vars
 const currentCustomIcon = leaflet.icon({
   iconUrl: 'img/pin-active.svg',
   iconSize: [26, 40],
@@ -22,24 +23,30 @@ const currentCustomIcon = leaflet.icon({
 
 
 function Map(props) {
-  const {city, offers} = props;
+  const {city, offers, activeCard } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    const markers = leaflet.layerGroup();
     if (map) {
-      offers.forEach((offer) => {
+      markers.addTo(map);
+      offers.forEach(({ location: { latitude, longitude }, id }) => {
         leaflet
           .marker({
-            lat: offer.location.latitude,
-            lng: offer.location.longitude,
+            lat: latitude,
+            lng: longitude,
           }, {
-            icon: defaultCustomIcon,
+            icon: activeCard === id ? currentCustomIcon : defaultCustomIcon,
           })
-          .addTo(map);
+          .addTo(markers);
       });
     }
-  }, [map, offers]);
+    return () => {
+      markers.clearLayers();
+    };
+
+  }, [map, offers, activeCard]);
 
   return (
     <div
@@ -60,6 +67,9 @@ Map.propTypes = {
     }),
     name: PropTypes.string.isRequired,
   }),
+  activeCard: PropTypes.number,
 };
 
-export default Map;
+const mapStateToProps = ({ activeCard }) => ({ activeCard });
+
+export default connect(mapStateToProps)(Map);

@@ -1,6 +1,7 @@
 export const ActionType = {
   CHANGE_CITY: '/changeCity',
-  FILTER_OFFERS_LIST: 'offers/filterOffersList',
+  FILTER_OFFERS: 'offers/filterOffers',
+  HOVER_CARD: 'card/hoverCard',
 };
 
 export const ActionCreator = {
@@ -8,7 +9,11 @@ export const ActionCreator = {
     type: ActionType.CHANGE_CITY,
     payload: city,
   }),
-  filterOffersList: () => ({
-    type: ActionType.FILTER_OFFERS_LIST,
+  filterOffers: () => ({
+    type: ActionType.FILTER_OFFERS,
+  }),
+  hoverCard: (id) => ({
+    type: ActionType.HOVER_CARD,
+    payload: id,
   }),
 };
