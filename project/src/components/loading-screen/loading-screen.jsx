@@ -1,8 +1,12 @@
 import React from 'react';
+import './loading-screen.css';
 
 function LoadingScreen() {
   return (
-    <p>Loading ...</p>
+    <div className="loading-spinner-container">
+      <div className="loading-spinner">
+      </div>
+    </div>
   );
 }
 
