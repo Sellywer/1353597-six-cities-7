@@ -11,6 +11,13 @@ export const AuthorizationStatus = {
   UNKNOWN: 'UNKNOWN',
 };
 
+export const APIRoute = {
+  OFFERS: '/hotels',
+  REVIEWS: '/comments',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};
+
 export const CardType = {
   MAIN_PAGE: {
     articleClassName: 'cities__place-card',

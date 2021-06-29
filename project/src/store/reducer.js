@@ -9,6 +9,7 @@ const initialState = {
   reviews: [],
   activeCard: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,6 +33,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: action.payload,
+        isDataLoaded: true,
       };
     case ActionType.LOAD_REVIEWS:
       return {
