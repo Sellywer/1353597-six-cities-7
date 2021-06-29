@@ -1,12 +1,11 @@
 import {ActionType} from './action';
-import offers from '../mock/offers';
 import {AuthorizationStatus} from '../const';
 
 const DEFAULT_CITY = 'Paris';
 
 const initialState = {
   city: DEFAULT_CITY,
-  offers: offers,
+  offers: [],
   reviews: [],
   activeCard: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
