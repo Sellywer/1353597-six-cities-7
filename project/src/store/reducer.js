@@ -1,5 +1,6 @@
 import {ActionType} from './action';
 import offers from '../mock/offers';
+import {AuthorizationStatus} from '../const';
 
 const DEFAULT_CITY = 'Paris';
 
@@ -8,6 +9,7 @@ const initialState = {
   offers: offers,
   reviews: [],
   activeCard: null,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
 const reducer = (state = initialState, action) => {
@@ -36,6 +38,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.payload,
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     default:
       return state;
