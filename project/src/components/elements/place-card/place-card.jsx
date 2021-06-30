@@ -36,7 +36,7 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, hoverCard}) {
           <span>Premium</span>
         </div> : ''}
       <div className={`${imgWrapperClassName} place-card__image-wrapper`}>
-        <Link to={{ pathname: generatePath(AppRoute.ROOM, { id }), state: id }}>
+        <Link to={{ pathname: generatePath(AppRoute.ROOM, { id })}}>
           <img
             className="place-card__image"
             src={previewImage}

@@ -41,6 +41,10 @@ function Map(props) {
           })
           .addTo(markers);
       });
+      map.flyTo(
+        [offers[0].city.location.latitude, offers[0].city.location.longitude],
+        offers[0].city.location.zoom,
+      );
     }
     return () => {
       markers.clearLayers();

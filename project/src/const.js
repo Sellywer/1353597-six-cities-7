@@ -5,6 +5,19 @@ export const AppRoute = {
   ROOM: '/offer/:id',
 };
 
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
+
+export const APIRoute = {
+  OFFERS: '/hotels',
+  REVIEWS: '/comments',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};
+
 export const CardType = {
   MAIN_PAGE: {
     articleClassName: 'cities__place-card',
