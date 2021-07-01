@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import Main from '../pages/main/main';
@@ -9,6 +9,8 @@ import Offer from '../pages/offer/offer';
 import Login from '../pages/login/login';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { PrivateRoute } from '../../components/private-route/private-route';
+import browserHistory from '../../browser-history';
 
 import offerProp from '../props/offer.prop';
 import reviewProp from '../props/review.prop';
@@ -25,20 +27,24 @@ function App(props) {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path={AppRoute.MAIN}>
-          <Main offers={offers} />
-        </Route>
-        <Route exact path={AppRoute.SIGN_IN}>
-          <Login />
-        </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <PageFavorites offers={offers} />
-        </Route>
-        <Route exact path={AppRoute.ROOM}>
-          <Offer offers={offers} reviews={reviews} />
-        </Route>
+        <Route exact path={AppRoute.MAIN} component={Main}/>
+        <Route exact path={AppRoute.SIGN_IN} component={Login}/>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          authorizationStatus={authorizationStatus}
+          render={() => <PageFavorites offers={offers} />}
+        />
+        <Route exact path={AppRoute.ROOM}
+          render={({match}) => (
+            <Offer
+              id={match.params.id}
+              reviews={reviews}
+            />
+          )}
+        />
         <Route>
           <PageNotFound />
         </Route>
