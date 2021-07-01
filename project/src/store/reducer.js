@@ -10,6 +10,7 @@ const initialState = {
   activeCard: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
+  user: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,6 +50,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
+      };
+    case ActionType.SET_USER:
+      return {
+        ...state,
+        user: action.payload,
       };
     default:
       return state;

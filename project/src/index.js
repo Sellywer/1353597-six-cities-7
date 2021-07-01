@@ -10,6 +10,7 @@ import App from './components/app/app';
 import {reducer} from './store/reducer';
 import {ActionCreator} from './store/action';
 import {checkAuth, fetchOffers} from './store/api-actions';
+import {redirect} from './store/middlewares/redirect';
 
 import {AuthorizationStatus} from './const';
 
@@ -21,6 +22,7 @@ const store = createStore(
   reducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
+    applyMiddleware(redirect),
   ),
 );
 

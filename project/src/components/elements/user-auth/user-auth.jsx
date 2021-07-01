@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
 
 import {AppRoute} from '../../../const';
 import {logout} from '../../../store/api-actions';
+import { ActionCreator } from '../../../store/action';
 
+function HeaderNavAuthorized({email, signOut, setUser }) {
 
-function HeaderNavAuthorized({ email, signOut}) {
   const handleClick = async () => {
     await signOut();
+    setUser({});
   };
 
   return (
@@ -26,15 +28,10 @@ function HeaderNavAuthorized({ email, signOut}) {
           </Link>
         </li>
         <li className="header__nav-item">
-          <Link
-            className="header__nav-link"
-            onClick={(evt) => {
-              evt.preventDefault();
-              signOut();
-            }}
-            to={AppRoute.MAIN}
-          >
-            <span className="header__signout" onClick={handleClick}>Sign out</span>
+          <Link className="header__nav-link" to={AppRoute.MAIN}>
+            <span className="header__signout" onClick={handleClick}>
+              Sign out
+            </span>
           </Link>
         </li>
       </ul>
@@ -42,15 +39,19 @@ function HeaderNavAuthorized({ email, signOut}) {
   );
 }
 
-
 HeaderNavAuthorized.propTypes = {
   email: PropTypes.string,
   signOut: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = ({ user: { email} }) => ({
+  email,
+});
 
 const mapDispatchToProps = {
   signOut: logout,
+  setUser: ActionCreator.setUser,
 };
 
-export {HeaderNavAuthorized};
-export default connect(null, mapDispatchToProps)(HeaderNavAuthorized);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderNavAuthorized);

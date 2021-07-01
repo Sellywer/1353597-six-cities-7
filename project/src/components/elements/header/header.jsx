@@ -3,12 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import HeaderNavGuest from '../header-nav-guest/header-nav-guest';
-import HeaderNavAuthorized from '../header-nav-authorized/header-nav-authorized';
+import UserNoAuth from '../user-no-auth/user-no-auth';
+import UserAuth from '../user-auth/user-auth';
 import {AuthorizationStatus} from '../../../const';
 import Logo from '../logo/logo';
+import {logout} from '../../../store/api-actions';
 
-function Header({ authorizationStatus }) {
+
+function Header({ authorizationStatus, userEmail, signOut }) {
   return (
     <header className="header">
       <div className="container">
@@ -17,9 +19,9 @@ function Header({ authorizationStatus }) {
             <Logo />
           </div>
           {authorizationStatus === AuthorizationStatus.AUTH ? (
-            <HeaderNavAuthorized />
+            <UserAuth userEmail={userEmail} signOut={signOut} />
           ) : (
-            <HeaderNavGuest />
+            <UserNoAuth />
           )}
         </div>
       </div>
@@ -29,10 +31,17 @@ function Header({ authorizationStatus }) {
 
 Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
+  userEmail: PropTypes.string,
+  signOut: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ authorizationStatus }) => ({
+const mapStateToProps = ({ authorizationStatus, userEmail }) => ({
   authorizationStatus,
+  userEmail,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = {
+  signOut: logout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
