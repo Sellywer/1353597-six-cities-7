@@ -1,29 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Map from '../../map/map';
 import Header from '../../elements/header/header';
 import CardList from '../card-list/card-list';
+import { fetchReviewList, fetchOffers } from '../../../store/api-actions';
 
-import ReviewsList from '../../elements/reviews/reviews-list';
 import ReviewForm from '../../elements/reviews/review-form';
 
 import offerProp from '../../props/offer.prop';
-import reviewsProp from '../../props/review.prop';
 
 import {calcRatingInPercent} from '../../../utils';
 import {QUANTITY_OF_OFFERS_NEARBY, CardType} from '../../../const';
 
 function Offer(props) {
 
-  const {offers, reviews} = props;
+  const {offers, loadReviewList } = props;
 
   const location = useLocation();
 
-  const offer = offers.find((item) => item.id === location.state);
+  const roomId = +location.pathname.replace(/\D+/g, '');
+
+  const offer = offers.find((item) => item.id === roomId);
   const nearOffers = offers.filter((item) => item !== offer).slice(0, QUANTITY_OF_OFFERS_NEARBY);
+
+  useEffect(() => {
+    loadReviewList(roomId);
+  }, [roomId, loadReviewList]);
 
   return (
     <div className="page">
@@ -116,8 +121,7 @@ function Offer(props) {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews} />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">10</span></h2>
                 <ReviewForm />
               </section>
             </div>
@@ -142,7 +146,7 @@ function Offer(props) {
 
 Offer.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
+  loadReviewList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ offers, review }) => ({
@@ -150,4 +154,9 @@ const mapStateToProps = ({ offers, review }) => ({
   review,
 });
 
-export default connect(mapStateToProps)(Offer);
+const mapDispatchToProps = {
+  loadReviewList: fetchReviewList,
+  loadOfferList: fetchOffers,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Offer);

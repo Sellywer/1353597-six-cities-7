@@ -12,13 +12,10 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { PrivateRoute } from '../../components/private-route/private-route';
 import browserHistory from '../../browser-history';
 
-import offerProp from '../props/offer.prop';
-import reviewProp from '../props/review.prop';
-
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 function App(props) {
-  const {offers, reviews, authorizationStatus, isDataLoaded} = props;
+  const {authorizationStatus, isDataLoaded} = props;
 
   if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isDataLoaded) {
     return (
@@ -31,20 +28,11 @@ function App(props) {
       <Switch>
         <Route exact path={AppRoute.MAIN} component={Main}/>
         <Route exact path={AppRoute.SIGN_IN} component={Login}/>
-        <PrivateRoute
-          exact
-          path={AppRoute.FAVORITES}
+        <PrivateRoute exact path={AppRoute.FAVORITES}
           authorizationStatus={authorizationStatus}
-          render={() => <PageFavorites offers={offers} />}
+          render={() => <PageFavorites />}
         />
-        <Route exact path={AppRoute.ROOM}
-          render={({match}) => (
-            <Offer
-              id={match.params.id}
-              reviews={reviews}
-            />
-          )}
-        />
+        <Route exact path={AppRoute.ROOM} component={Offer} />
         <Route>
           <PageNotFound />
         </Route>
@@ -55,15 +43,11 @@ function App(props) {
 }
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewProp).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
-  reviews: state.reviews,
   authorizationStatus: state.authorizationStatus,
   isDataLoaded: state.isDataLoaded,
 });

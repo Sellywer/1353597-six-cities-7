@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { ActionCreator } from '../../../store/action';
+import { fetchOffers } from '../../../store/api-actions';
 
-function CitiesList({ locations, city, changeCity }) {
+function CitiesList({ locations, city, changeCity, loadOfferList }) {
   return (
     <ul className="locations__list tabs__list">
       {locations.map((item) => (
@@ -12,6 +13,7 @@ function CitiesList({ locations, city, changeCity }) {
           <a
             onClick={() => {
               changeCity(item);
+              loadOfferList();
             }}
             className={
               city === item
@@ -32,6 +34,7 @@ CitiesList.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   city: PropTypes.string.isRequired,
   changeCity: PropTypes.func.isRequired,
+  loadOfferList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ city }) => ({
@@ -40,6 +43,7 @@ const mapStateToProps = ({ city }) => ({
 
 const mapDispatchToProps = {
   changeCity: ActionCreator.changeCity,
+  loadOfferList: fetchOffers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CitiesList);
