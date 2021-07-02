@@ -11,6 +11,25 @@ export const fetchOffers = () => (dispatch, _getState, api) => (
     .then((offers) => dispatch(ActionCreator.loadOffers(offers)))
 );
 
+export const fetchOffer = (id) => (dispatch, _getState, api) => (
+  api.get(`{APIRoute.OFFERS}${id}`)
+    .then(({data}) => {
+      const offer = adaptOfferToClient(data);
+      return offer;
+    })
+    .then((offer) => dispatch(ActionCreator.loadOffer(offer)))
+);
+
+export const fetchOffersNearby = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
+    .then(({data}) => {
+      const offers = data.map((offer) => adaptOfferToClient(offer));
+      return offers;
+    })
+    .then((offers) => dispatch(ActionCreator.loadOffersNearby(offers)))
+    .catch(() => dispatch(ActionCreator.loadOffersNearby([])))
+);
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
