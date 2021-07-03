@@ -154,9 +154,9 @@ Offer.propTypes = {
   loadReviewList: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ offers, review }) => ({
+const mapStateToProps = ({ offers, reviews }) => ({
   offers,
-  review,
+  reviews,
 });
 
 const mapDispatchToProps = {
