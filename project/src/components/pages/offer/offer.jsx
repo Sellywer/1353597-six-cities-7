@@ -8,16 +8,19 @@ import Header from '../../elements/header/header';
 import CardList from '../card-list/card-list';
 import { fetchReviewList, fetchOffers } from '../../../store/api-actions';
 
+import ReviewsList from '../../elements/reviews/reviews-list';
 import ReviewForm from '../../elements/reviews/review-form';
 
 import offerProp from '../../props/offer.prop';
+import reviewsProp from '../../props/review.prop';
+
 
 import {calcRatingInPercent} from '../../../utils';
 import {QUANTITY_OF_OFFERS_NEARBY, CardType} from '../../../const';
 
 function Offer(props) {
 
-  const {offers, loadReviewList } = props;
+  const {offers = [], reviews = [], loadReviewList } = props;
 
   const location = useLocation();
 
@@ -121,7 +124,8 @@ function Offer(props) {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">10</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <ReviewsList reviews={reviews} />
                 <ReviewForm />
               </section>
             </div>
@@ -146,6 +150,7 @@ function Offer(props) {
 
 Offer.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
+  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
   loadReviewList: PropTypes.func.isRequired,
 };
 
@@ -158,5 +163,6 @@ const mapDispatchToProps = {
   loadReviewList: fetchReviewList,
   loadOfferList: fetchOffers,
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Offer);

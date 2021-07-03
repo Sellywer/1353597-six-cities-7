@@ -1,26 +1,15 @@
 import {ActionCreator} from './action';
 import {AuthorizationStatus, APIRoute, AppRoute} from '../const';
-import {adaptOfferToClient} from '../adapter/adapter';
+import {adaptOfferToClient, adaptCommentToClient} from '../adapter/adapter';
 
-export const fetchOffers = () => (dispatch, _getState, api) =>
-  api.get(APIRoute.OFFERS).then(({ data }) => {
-    dispatch(
-      ActionCreator.loadOffers(
-        data.map((item) => ({
-          ...item,
-          isFavorite: item.is_favorite,
-          isPremium: item.is_premium,
-          maxAdults: item.max_adults,
-          previewImage: item.preview_image,
-          host: {
-            ...item.host,
-            isPro: item.host.is_pro,
-            avatarUrl: item.host.avatar_url,
-          },
-        })),
-      ),
-    );
-  });
+export const fetchOffers = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.OFFERS)
+    .then(({data}) => {
+      const offers = data.map((offer) => adaptOfferToClient(offer));
+      return offers;
+    })
+    .then((offers) => dispatch(ActionCreator.loadOffers(offers)))
+);
 
 export const fetchOffer = (id) => (dispatch, _getState, api) => (
   api.get(`{APIRoute.OFFERS}${id}`)
@@ -31,21 +20,14 @@ export const fetchOffer = (id) => (dispatch, _getState, api) => (
     .then((offer) => dispatch(ActionCreator.loadOffer(offer)))
 );
 
-export const fetchReviewList = (id) => (dispatch, _getState, api) =>
-  api.get(`${APIRoute.REVIEWS}/${id}`).then(({ data }) => {
-    dispatch(
-      ActionCreator.loadReviews(
-        data.map((item) => ({
-          ...item,
-          user: {
-            ...item.user,
-            avatarUrl: item.user.avatar_url,
-            isPro: item.user.is_pro,
-          },
-        })),
-      ),
-    );
-  });
+export const fetchReviewList = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.REVIEWS}/${id}`)
+    .then(({ data }) => {
+      dispatch(ActionCreator.loadReviews(
+        data.map((review) => adaptCommentToClient(review)),
+      ));
+    })
+);
 
 export const fetchOffersNearby = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)

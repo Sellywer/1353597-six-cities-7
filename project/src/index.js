@@ -9,7 +9,7 @@ import {createAPI} from './services/api';
 import App from './components/app/app';
 import {reducer} from './store/reducer';
 import {ActionCreator} from './store/action';
-import {checkAuth, fetchOffers} from './store/api-actions';
+import {checkAuth, fetchOffers, fetchReviewList} from './store/api-actions';
 import {redirect} from './store/middlewares/redirect';
 
 import {AuthorizationStatus} from './const';
@@ -28,6 +28,7 @@ const store = createStore(
 
 store.dispatch(checkAuth());
 store.dispatch(fetchOffers());
+store.dispatch(fetchReviewList());
 
 ReactDOM.render(
   <React.StrictMode>

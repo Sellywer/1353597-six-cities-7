@@ -22,27 +22,18 @@ export const adaptOfferToClient = (offer) => {
   return adaptedOffer;
 };
 
-export const adaptOfferToServer = (offer) => {
-  const adaptedOffer = {
-    ...offer,
-    host: {
-      ...offer.host,
-      'avatar_url': offer.host.avatarUrl,
-      'is_pro': offer.host.isPro,
+export const adaptCommentToClient = (comment) => {
+  const adaptedComment ={
+    ...comment,
+    user: {
+      ...comment.user,
+      avatarUrl: comment.user.avatar_url,
+      isPro: comment.user.is_pro,
     },
-    'is_favorite': offer.isFavorite,
-    'is_premium': offer.isPremium,
-    'max_adults': offer.maxAdults,
-    'preview_image': offer.previewImage,
   };
 
-  delete adaptedOffer.host.avatarUrl;
-  delete adaptedOffer.host.isPro;
-  delete adaptedOffer.isFavorite;
-  delete adaptedOffer.isPremium;
-  delete adaptedOffer.maxAdults;
-  delete adaptedOffer.previewImage;
+  delete adaptedComment.user.avatar_url;
+  delete adaptedComment.user.is_pro;
 
-  return adaptedOffer;
+  return adaptedComment;
 };
-
