@@ -7,6 +7,7 @@ import Map from '../../map/map';
 import Header from '../../elements/header/header';
 import CardList from '../card-list/card-list';
 import { fetchReviewList, fetchOffers } from '../../../store/api-actions';
+import {AuthorizationStatus} from '../../../const';
 
 import ReviewsList from '../../elements/reviews/reviews-list';
 import ReviewForm from '../../elements/reviews/review-form';
@@ -20,7 +21,7 @@ import {QUANTITY_OF_OFFERS_NEARBY, CardType} from '../../../const';
 
 function Offer(props) {
 
-  const {offers = [], reviews = [], loadReviewList } = props;
+  const {offers = [], reviews = [], loadReviewList, authorizationStatus } = props;
 
   const GetId = () => {
     const { id } = useParams();
@@ -129,7 +130,8 @@ function Offer(props) {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews} />
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.AUTH ? (
+                  <ReviewForm /> ) : ('')}
               </section>
             </div>
           </div>
@@ -155,11 +157,13 @@ Offer.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
   loadReviewList: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ offers, reviews }) => ({
+const mapStateToProps = ({ offers, reviews, authorizationStatus }) => ({
   offers,
   reviews,
+  authorizationStatus,
 });
 
 const mapDispatchToProps = {
