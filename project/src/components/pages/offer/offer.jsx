@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {useParams} from 'react-router-dom';
 
 import Map from '../../map/map';
 import Header from '../../elements/header/header';
@@ -22,9 +22,12 @@ function Offer(props) {
 
   const {offers = [], reviews = [], loadReviewList } = props;
 
-  const location = useLocation();
+  const GetId = () => {
+    const { id } = useParams();
+    return Number(id);
+  };
 
-  const roomId = +location.pathname.replace(/\D+/g, '');
+  const roomId = GetId();
 
   const offer = offers.find((item) => item.id === roomId);
   const nearOffers = offers.filter((item) => item !== offer).slice(0, QUANTITY_OF_OFFERS_NEARBY);
