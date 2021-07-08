@@ -50,7 +50,7 @@ function Map(props) {
       markers.clearLayers();
     };
 
-  }, [map, offers, activeCard]);
+  }, [map, offers, activeCard, city]);
 
   return (
     <div

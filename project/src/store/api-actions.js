@@ -30,7 +30,7 @@ export const fetchReviewList = (id) => (dispatch, _getState, api) => (
 );
 
 export const fetchOffersNearby = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
+  api.get(`${APIRoute.OFFERS}/${id}/nearby`)
     .then(({data}) => {
       const offers = data.map((offer) => adaptOfferToClient(offer));
       return offers;
