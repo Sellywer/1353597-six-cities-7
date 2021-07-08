@@ -31,7 +31,7 @@ function Offer(props) {
   const roomId = GetId();
 
   const offer = offers.find((item) => item.id === roomId);
-  const nearOffers = offersNearby.filter((item) => item !== offer).slice(0, QUANTITY_OF_OFFERS_NEARBY);
+  const nearOffers = offers.slice(0, QUANTITY_OF_OFFERS_NEARBY);
 
   useEffect(() => {
     loadReviewList(roomId);
@@ -138,7 +138,7 @@ function Offer(props) {
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews} />
                 {authorizationStatus === AuthorizationStatus.AUTH ? (
-                  <ReviewForm /> ) : ('')}
+                  <ReviewForm id={roomId}/> ) : ('')}
               </section>
             </div>
           </div>

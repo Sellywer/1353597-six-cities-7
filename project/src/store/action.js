@@ -11,6 +11,7 @@ export const ActionType = {
   SET_USER: 'user/setUser',
   LOAD_COMMENTS: 'comments/loadComments',
   LOAD_OFFERS_NEARBY: 'offers/loadOffersNearby',
+  UPDATE_REVIEWS: 'comments/updateReviews',
 };
 
 export const ActionCreator = {
@@ -55,5 +56,9 @@ export const ActionCreator = {
   setUser: (userData) => ({
     type: ActionType.SET_USER,
     payload: userData,
+  }),
+  updateReviews: (reviews) => ({
+    type: ActionType.UPDATE_REVIEWS,
+    payload: reviews,
   }),
 };

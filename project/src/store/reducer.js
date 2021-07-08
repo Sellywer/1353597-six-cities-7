@@ -8,7 +8,6 @@ const initialState = {
   offers: [],
   reviews: [],
   activeCard: null,
-  currentOffer: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
   isOfferLoaded: false,
@@ -16,11 +15,6 @@ const initialState = {
   areLoadedOffersNearby: false,
   offersNearby: [],
   user: {},
-  hasPostedComment: {
-    hasPosted: true,
-    comment: '',
-    rating: 0,
-  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -75,6 +69,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offersNearby: action.payload,
+      };
+    case ActionType.UPDATE_REVIEWS:
+      return {
+        ...state,
+        ...state.detailedData,
+        reviews: action.payload,
       };
     default:
       return state;
