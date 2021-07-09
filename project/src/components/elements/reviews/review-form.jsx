@@ -8,7 +8,7 @@ export function ReviewForm(props) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  const {onSubmit, roomId} = props;
+  const {onSubmit, id} = props;
 
   // eslint-disable-next-line no-console
   console.log(props);
@@ -17,7 +17,7 @@ export function ReviewForm(props) {
     evt.preventDefault();
 
     onSubmit(
-      roomId,
+      id,
       {comment, rating},
     );
 
@@ -103,13 +103,13 @@ export function ReviewForm(props) {
 }
 
 ReviewForm.propTypes = {
-  roomId: PropTypes.number,
+  id: PropTypes.number,
   onSubmit: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(roomId, commentData) {
-    dispatch(postComment(roomId, commentData));
+  onSubmit(id, commentData) {
+    dispatch(postComment(id, commentData));
   },
 });
 
