@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router';
 import { connect } from 'react-redux';
+import {useParams} from 'react-router-dom';
 
 import Map from '../../map/map';
 import Header from '../../elements/header/header';
-import CardList from '../card-list/card-list';
+import { fetchReviewList, fetchOffers, fetchOffersNearby } from '../../../store/api-actions';
+import {AuthorizationStatus} from '../../../const';
 
+import PageNotFound from '../page-not-found/page-not-found';
+import NearPlaces from '../../elements/near-places/near-places';
 import ReviewsList from '../../elements/reviews/reviews-list';
 import ReviewForm from '../../elements/reviews/review-form';
 
@@ -14,16 +17,32 @@ import offerProp from '../../props/offer.prop';
 import reviewsProp from '../../props/review.prop';
 
 import {calcRatingInPercent} from '../../../utils';
-import {QUANTITY_OF_OFFERS_NEARBY, CardType} from '../../../const';
+import {QUANTITY_OF_OFFERS_NEARBY} from '../../../const';
 
 function Offer(props) {
 
-  const {offers, reviews} = props;
+  const {offers = [], reviews = [], offersNearby=[], loadReviewList, authorizationStatus, areLoadedOffersNearby } = props;
 
-  const location = useLocation();
+  const GetId = () => {
+    const { id } = useParams();
+    return Number(id);
+  };
 
-  const offer = offers.find((item) => item.id === location.state);
-  const nearOffers = offers.filter((item) => item !== offer).slice(0, QUANTITY_OF_OFFERS_NEARBY);
+  const roomId = GetId();
+
+  const offer = offers.find((item) => item.id === roomId);
+  const nearOffers = offers.slice(0, QUANTITY_OF_OFFERS_NEARBY);
+
+  useEffect(() => {
+    loadReviewList(roomId);
+    areLoadedOffersNearby(roomId);
+  }, [roomId, loadReviewList, areLoadedOffersNearby]);
+
+  if (offers.some((item) => item.id === !roomId)) {
+    return (
+      <PageNotFound />
+    );
+  }
 
   return (
     <div className="page">
@@ -118,7 +137,8 @@ function Offer(props) {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews} />
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.AUTH ? (
+                  <ReviewForm id={roomId}/> ) : ('')}
               </section>
             </div>
           </div>
@@ -128,12 +148,9 @@ function Offer(props) {
         </section>
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardList
-              offers={nearOffers}
-              CardType={CardType.ROOM_PAGE}
-            />
+
           </section>
+          <NearPlaces offers={offersNearby}/>
         </div>
       </main>
     </div>
@@ -143,11 +160,24 @@ function Offer(props) {
 Offer.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
+  offersNearby: PropTypes.arrayOf(offerProp).isRequired,
+  loadReviewList: PropTypes.func.isRequired,
+  areLoadedOffersNearby: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ offers, review }) => ({
+const mapStateToProps = ({ offers, reviews, authorizationStatus, offersNearby }) => ({
   offers,
-  review,
+  reviews,
+  authorizationStatus,
+  offersNearby,
 });
 
-export default connect(mapStateToProps)(Offer);
+const mapDispatchToProps = {
+  loadReviewList: fetchReviewList,
+  loadOfferList: fetchOffers,
+  areLoadedOffersNearby: fetchOffersNearby,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Offer);

@@ -52,7 +52,7 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, hoverCard}) {
           </div>
           <button className={`place-card__bookmark-button button${isFavorite ? ' place-card__bookmark-button--active' : ''}`} type="button">
             <svg className="place-card__bookmark-icon"
-              style={{width: '18', height: '19'}}
+              width="18" height="19"
             >
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

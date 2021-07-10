@@ -1,52 +1,81 @@
-import React from 'react';
+import React, {useRef } from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import Logo from '../../elements/logo/logo';
+import { CITIES } from '../../../const';
 
-function Login() {
+import { ActionCreator } from '../../../store/action';
+import {login} from '../../../store/api-actions';
+import Header from '../../elements/header/header';
+
+function Login(props) {
+
+  const {changeCity, onSubmit} = props;
+
+  const loginRef = useRef();
+  const passwordRef = useRef();
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    onSubmit({
+      login: loginRef.current.value,
+      password: passwordRef.current.value,
+    });
+  };
 
   return (
     <div className="page page--gray page--login">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#nav">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__login">Sign in</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
+
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form
+              className="login__form form"
+              action="#"
+              method="post"
+              onSubmit={handleSubmit}
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required="" />
+                <input
+                  className="login__input form__input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required=""
+                  ref={loginRef}
+                />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required="" />
+                <input
+                  className="login__input form__input"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required=""
+                  ref={passwordRef}
+                />
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button
+                className="login__submit form__submit button"
+                type="submit"
+              >
+                Sign in
+              </button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#amsterdam">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to="/">
+                <span onClick={() => changeCity(CITIES.AMSTERDAM)}>
+                  Amsterdam
+                </span>
+              </Link>
             </div>
           </section>
         </div>
@@ -55,4 +84,16 @@ function Login() {
   );
 }
 
-export default Login;
+Login.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  changeCity: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = ({
+  onSubmit: login,
+  changeCity: ActionCreator.changeCity,
+  redirectToRoute: ActionCreator.redirectToRoute,
+});
+
+export {Login};
+export default connect(null, mapDispatchToProps)(Login);
