@@ -3,6 +3,7 @@ export const AppRoute = {
   SIGN_IN: '/login',
   FAVORITES: '/favorites',
   ROOM: '/offer/:id',
+  NOT_FOUND: '/not-found',
 };
 
 export const AuthorizationStatus = {

@@ -4,20 +4,17 @@ import {adaptOfferToClient, adaptCommentToClient} from '../adapter/adapter';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
-    .then(({data}) => {
-      const offers = data.map((offer) => adaptOfferToClient(offer));
-      return offers;
-    })
-    .then((offers) => dispatch(ActionCreator.loadOffers(offers)))
+    .then(({data}) => dispatch(ActionCreator.loadOffers(data.map(adaptOfferToClient))))
 );
 
 export const fetchOffer = (id) => (dispatch, _getState, api) => (
-  api.get(`{APIRoute.OFFERS}${id}`)
+  api.get(`${APIRoute.OFFERS}/${id}`)
     .then(({data}) => {
-      const offer = adaptOfferToClient(data);
-      return offer;
+      dispatch(ActionCreator.loadOffer(adaptOfferToClient(data)));
     })
-    .then((offer) => dispatch(ActionCreator.loadOffer(offer)))
+    .catch(() => {
+      dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND));
+    })
 );
 
 export const fetchReviewList = (id) => (dispatch, _getState, api) => (
@@ -27,10 +24,11 @@ export const fetchReviewList = (id) => (dispatch, _getState, api) => (
         data.map((review) => adaptCommentToClient(review)),
       ));
     })
+    .catch(() => dispatch(ActionCreator.loadReviews([])))
 );
 
-export const fetchOffersNearby = (roomid) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.OFFERS}/${roomid}/nearby`)
+export const fetchOffersNearby = (roomId) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.OFFERS}/${roomId}/nearby`)
     .then(({data}) => {
       const offers = data.map((offer) => adaptOfferToClient(offer));
       return offers;

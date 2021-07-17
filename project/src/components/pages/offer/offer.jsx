@@ -5,7 +5,7 @@ import {useParams} from 'react-router-dom';
 
 import Map from '../../map/map';
 import Header from '../../elements/header/header';
-import { fetchReviewList, fetchOffers, fetchOffersNearby } from '../../../store/api-actions';
+import { fetchReviewList, fetchOffer, fetchOffersNearby } from '../../../store/api-actions';
 import {AuthorizationStatus} from '../../../const';
 
 import PageNotFound from '../page-not-found/page-not-found';
@@ -17,11 +17,10 @@ import offerProp from '../../props/offer.prop';
 import reviewsProp from '../../props/review.prop';
 
 import {calcRatingInPercent} from '../../../utils';
-import {QUANTITY_OF_OFFERS_NEARBY} from '../../../const';
 
 function Offer(props) {
 
-  const {offers = [], reviews = [], offersNearby=[], loadReviewList, authorizationStatus, areLoadedOffersNearby } = props;
+  const {offers = [], reviews = [], offersNearby=[], loadReviewList, loadOfferData, authorizationStatus, areLoadedOffersNearby } = props;
 
   const GetId = () => {
     const { id } = useParams();
@@ -31,21 +30,21 @@ function Offer(props) {
   const roomId = GetId();
 
   const offer = offers.find((item) => item.id === roomId);
-  const nearOffers = offers.slice(0, QUANTITY_OF_OFFERS_NEARBY);
 
   useEffect(() => {
+    loadOfferData(roomId);
     loadReviewList(roomId);
     areLoadedOffersNearby(roomId);
-  }, [roomId, loadReviewList, areLoadedOffersNearby]);
+  }, [roomId, loadOfferData, loadReviewList, areLoadedOffersNearby]);
 
-  if (offers.some((item) => item.id === !roomId)) {
+  if (offer === undefined) {
     return (
       <PageNotFound />
     );
   }
 
   return (
-    <div className="page">
+    <div className="page" >
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
@@ -70,9 +69,8 @@ function Offer(props) {
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon"
+                    width="31" height="33"
                     style = {{
-                      width: '31',
-                      height: '33',
                       fill: `${offer.isFavorite && '#4481c3'}`,
                       stroke: `${offer.isFavorite ? '#4481c3' : '#979797'}`,
                     }}
@@ -118,7 +116,7 @@ function Offer(props) {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={offer.host.avatarUrl} style = {{width: '74', height: '74'}} alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     {offer.host.name}
@@ -143,7 +141,7 @@ function Offer(props) {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={offers[0].city} offers={nearOffers}/>
+            <Map city={offers[0].city} offers={[offer, ...offersNearby]} activeCard={offer}/>
           </section>
         </section>
         <div className="container">
@@ -162,20 +160,22 @@ Offer.propTypes = {
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
   offersNearby: PropTypes.arrayOf(offerProp).isRequired,
   loadReviewList: PropTypes.func.isRequired,
+  loadOfferData: PropTypes.func.isRequired,
   areLoadedOffersNearby: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ offers, reviews, authorizationStatus, offersNearby }) => ({
+const mapStateToProps = ({ offers, reviews, authorizationStatus, offersNearby, isOfferLoaded }) => ({
   offers,
   reviews,
   authorizationStatus,
   offersNearby,
+  isOfferLoaded,
 });
 
 const mapDispatchToProps = {
   loadReviewList: fetchReviewList,
-  loadOfferList: fetchOffers,
+  loadOfferData: fetchOffer,
   areLoadedOffersNearby: fetchOffersNearby,
 };
 

@@ -10,9 +10,6 @@ export function ReviewForm(props) {
 
   const {onSubmit, id} = props;
 
-  // eslint-disable-next-line no-console
-  console.log(props);
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
@@ -42,7 +39,7 @@ export function ReviewForm(props) {
           onChange={ratingChange}
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" style = {{width: '37', height: '33'}}>
+          <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -52,7 +49,7 @@ export function ReviewForm(props) {
 
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" style = {{width: '37', height: '33'}}>
+          <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -62,7 +59,7 @@ export function ReviewForm(props) {
 
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" style = {{width: '37', height: '33'}}>
+          <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -71,7 +68,7 @@ export function ReviewForm(props) {
           onChange={ratingChange}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" style = {{width: '37', height: '33'}}>
+          <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
