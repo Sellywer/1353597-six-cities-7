@@ -2,19 +2,24 @@ export const ActionType = {
   CHANGE_CITY: '/changeCity',
   FILTER_OFFERS: 'offers/filterOffers',
   HOVER_CARD: 'card/hoverCard',
-  LOAD_OFFERS: 'offers/loadOffers',
-  LOAD_OFFER: 'offers/loadOffer',
-  LOAD_REVIEWS: 'reviews/loadReviews',
+  LOAD_OFFERS: 'data/loadOffers',
+  LOAD_OFFER: 'data/loadOffer',
+  LOAD_REVIEWS: 'data/loadReviews',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'cities/redirectToRoute',
   SET_USER: 'user/setUser',
   LOAD_COMMENTS: 'comments/loadComments',
-  LOAD_OFFERS_NEARBY: 'offers/loadOffersNearby',
+  LOAD_OFFERS_NEARBY: 'data/loadOffersNearby',
   UPDATE_REVIEWS: 'comments/updateReviews',
+  SET_IS_OFFER_DATA_LOADED: 'offers/setIsOfferDataLoaded',
 };
 
 export const ActionCreator = {
+  setOfferLoadingStatus: (isLoaded) => ({
+    type: ActionType.SET_IS_OFFER_DATA_LOADED,
+    payload: !isLoaded,
+  }),
   changeCity: (city) => ({
     type: ActionType.CHANGE_CITY,
     payload: city,
