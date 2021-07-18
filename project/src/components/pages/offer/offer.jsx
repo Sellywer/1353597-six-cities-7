@@ -18,6 +18,8 @@ import reviewsProp from '../../props/review.prop';
 
 import {calcRatingInPercent} from '../../../utils';
 
+const MAX_ROOM_IMAGES = 6;
+
 function Offer(props) {
 
   const {offers = [], reviews = [], offersNearby=[], loadReviewList, loadOfferData, authorizationStatus, areLoadedOffersNearby } = props;
@@ -50,7 +52,7 @@ function Offer(props) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {offer.images.map((item) => (
+              {offer.images.slice(0, MAX_ROOM_IMAGES).map((item) => (
                 <div key={item} className="property__image-wrapper">
                   <img className="property__image" src={item} alt="Pic apartment"/>
                 </div>
