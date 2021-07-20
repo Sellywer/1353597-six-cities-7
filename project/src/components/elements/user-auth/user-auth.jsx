@@ -9,8 +9,9 @@ import { ActionCreator } from '../../../store/action';
 
 function HeaderNavAuthorized({email, signOut, setUser }) {
 
-  const handleClick = async () => {
-    await signOut();
+  const handleClick = (evt) => {
+    evt.preventDefault();
+    signOut();
     setUser({});
   };
 
@@ -45,7 +46,7 @@ HeaderNavAuthorized.propTypes = {
   setUser: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ user: { email} }) => ({
+const mapStateToProps = ({ user: { email } }) => ({
   email,
 });
 

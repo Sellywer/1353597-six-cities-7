@@ -7,10 +7,9 @@ import UserNoAuth from '../user-no-auth/user-no-auth';
 import UserAuth from '../user-auth/user-auth';
 import {AuthorizationStatus} from '../../../const';
 import Logo from '../logo/logo';
-import {logout} from '../../../store/api-actions';
 
 
-function Header({ authorizationStatus, email, signOut }) {
+function Header({ authorizationStatus }) {
   return (
     <header className="header">
       <div className="container">
@@ -19,7 +18,7 @@ function Header({ authorizationStatus, email, signOut }) {
             <Logo />
           </div>
           {authorizationStatus === AuthorizationStatus.AUTH ? (
-            <UserAuth email={email} signOut={signOut} />
+            <UserAuth />
           ) : (
             <UserNoAuth />
           )}
@@ -31,17 +30,10 @@ function Header({ authorizationStatus, email, signOut }) {
 
 Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  email: PropTypes.string,
-  signOut: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ authorizationStatus, email }) => ({
+const mapStateToProps = ({ authorizationStatus }) => ({
   authorizationStatus,
-  email,
 });
 
-const mapDispatchToProps = {
-  signOut: logout,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps)(Header);
