@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 import offerProp from '../../props/offer.prop';
 
 import {AppRoute, CardType} from '../../../const';
-import { ActionCreator } from '../../../store/action';
+import { hoverCard } from '../../../store/action';
 import {calcRatingInPercent} from '../../../utils';
 
-function PlaceCard({offer, cardType = CardType.MAIN_TYPE, hoverCard}) {
+function PlaceCard({offer, cardType = CardType.MAIN_TYPE, onHoverCard}) {
   const {
     id,
     price,
@@ -21,15 +21,15 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, hoverCard}) {
   } = offer;
 
   useEffect(() => () => {
-    hoverCard(null);
+    onHoverCard(null);
   });
 
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
   return (
     <article className={`${articleClassName} place-card`}
-      onMouseEnter={() => cardType === CardType.MAIN_PAGE && hoverCard(id)}
-      onMouseLeave={() => cardType === CardType.MAIN_PAGE && hoverCard(null)}
+      onMouseEnter={() => cardType === CardType.MAIN_PAGE && onHoverCard(id)}
+      onMouseLeave={() => cardType === CardType.MAIN_PAGE && onHoverCard(null)}
     >
       {isPremium ?
         <div className="place-card__mark">
@@ -86,11 +86,11 @@ PlaceCard.propTypes = {
     imgWidth: PropTypes.string,
     imgHeight: PropTypes.string,
   }).isRequired,
-  hoverCard: PropTypes.func.isRequired,
+  onHoverCard: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  hoverCard: ActionCreator.hoverCard,
+  onHoverCard: hoverCard,
 };
 
 export default connect(null, mapDispatchToProps)(PlaceCard);

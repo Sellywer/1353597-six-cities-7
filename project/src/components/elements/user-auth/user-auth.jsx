@@ -5,14 +5,14 @@ import {Link} from 'react-router-dom';
 
 import {AppRoute} from '../../../const';
 import {logout} from '../../../store/api-actions';
-import { ActionCreator } from '../../../store/action';
+import { setUser } from '../../../store/action';
 
-function HeaderNavAuthorized({email, signOut, setUser }) {
+function HeaderNavAuthorized({email, signOut, userData }) {
 
   const handleClick = (evt) => {
     evt.preventDefault();
     signOut();
-    setUser({});
+    userData({});
   };
 
   return (
@@ -43,7 +43,7 @@ function HeaderNavAuthorized({email, signOut, setUser }) {
 HeaderNavAuthorized.propTypes = {
   email: PropTypes.string,
   signOut: PropTypes.func.isRequired,
-  setUser: PropTypes.func.isRequired,
+  userData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ user: { email } }) => ({
@@ -52,7 +52,7 @@ const mapStateToProps = ({ user: { email } }) => ({
 
 const mapDispatchToProps = {
   signOut: logout,
-  setUser: ActionCreator.setUser,
+  userData: setUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderNavAuthorized);

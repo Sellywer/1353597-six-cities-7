@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 
 import { CITIES } from '../../../const';
 
-import { ActionCreator } from '../../../store/action';
+import { redirectToRoute, changeCity } from '../../../store/action';
 import {login} from '../../../store/api-actions';
 import Header from '../../elements/header/header';
 
 function Login(props) {
 
-  const {changeCity, onSubmit} = props;
+  const { onCityChange, onSubmit} = props;
 
   const loginRef = useRef();
   const passwordRef = useRef();
@@ -72,7 +72,7 @@ function Login(props) {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to="/">
-                <span onClick={() => changeCity(CITIES.AMSTERDAM)}>
+                <span onClick={() => onCityChange(CITIES.PARIS)}>
                   Amsterdam
                 </span>
               </Link>
@@ -86,13 +86,13 @@ function Login(props) {
 
 Login.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  changeCity: PropTypes.func.isRequired,
+  onCityChange: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = ({
   onSubmit: login,
-  changeCity: ActionCreator.changeCity,
-  redirectToRoute: ActionCreator.redirectToRoute,
+  onCityChange: changeCity,
+  redirectToRoute: redirectToRoute,
 });
 
 export {Login};
