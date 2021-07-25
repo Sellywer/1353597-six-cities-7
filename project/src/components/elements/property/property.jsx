@@ -152,12 +152,12 @@ Property.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ offers, reviews, authorizationStatus, offersNearby, isOfferLoaded }) => ({
-  offers,
-  reviews,
-  authorizationStatus,
-  offersNearby,
-  isOfferLoaded,
+const mapStateToProps = ({DATA, USER}) => ({
+  offers: DATA.offers,
+  reviews: DATA.reviews,
+  authorizationStatus: USER.authorizationStatus,
+  offersNearby: DATA.offersNearby,
+  isOfferLoaded: DATA.isOfferLoaded,
 });
 
 export default connect(mapStateToProps)(Property);

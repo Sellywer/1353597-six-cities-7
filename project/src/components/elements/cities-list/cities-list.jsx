@@ -37,8 +37,8 @@ CitiesList.propTypes = {
   loadOfferList: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ city }) => ({
-  city,
+const mapStateToProps = ({UI}) => ({
+  city: UI.city,
 });
 
 const mapDispatchToProps = {

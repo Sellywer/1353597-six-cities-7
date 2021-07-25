@@ -74,6 +74,6 @@ Map.propTypes = {
   activeCard: PropTypes.number,
 };
 
-const mapStateToProps = ({ activeCard }) => ({ activeCard });
+const mapStateToProps = ({UI}) => ({ activeCard: UI.activeCard });
 
 export default connect(mapStateToProps)(Map);

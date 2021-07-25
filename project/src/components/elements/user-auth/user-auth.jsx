@@ -46,8 +46,8 @@ HeaderNavAuthorized.propTypes = {
   userData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ user: { email } }) => ({
-  email,
+const mapStateToProps = ({USER}) => ({
+  email: USER.user.email,
 });
 
 const mapDispatchToProps = {

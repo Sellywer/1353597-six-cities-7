@@ -1,41 +1,18 @@
-import {ActionType} from './action';
-import {AuthorizationStatus, SortType} from '../const';
-
-const DEFAULT_CITY = 'Paris';
+import {ActionType} from '../action';
 
 const initialState = {
-  city: DEFAULT_CITY,
-  sortType: SortType.POPULAR,
   offers: [],
   offer: {},
   reviews: [],
-  activeCard: null,
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
   isOfferLoaded: false,
   areReviewsLoaded: false,
   areLoadedOffersNearby: false,
   offersNearby: [],
-  user: {},
 };
 
-const reducer = (state = initialState, action) => {
+const data = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.CHANGE_CITY:
-      return {
-        ...state,
-        city: action.payload,
-      };
-    case ActionType.FILTER_OFFERS:
-      return {
-        ...state,
-        sortType: action.payload,
-      };
-    case ActionType.HOVER_CARD:
-      return {
-        ...state,
-        activeCard: action.payload,
-      };
     case ActionType.LOAD_OFFERS:
       return {
         ...state,
@@ -52,21 +29,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.payload,
-      };
-    case ActionType.REQUIRED_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-      };
-    case ActionType.LOGOUT:
-      return {
-        ...state,
-        authorizationStatus: AuthorizationStatus.NO_AUTH,
-      };
-    case ActionType.SET_USER:
-      return {
-        ...state,
-        user: action.payload,
       };
     case ActionType.SET_ARE_LOADED_OFFERS_NEARBY:
       return {
@@ -89,4 +51,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export {reducer};
+export {data};
