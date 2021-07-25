@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 
+import {getUserEmail} from '../../../store/user/selectors';
+
 import {AppRoute} from '../../../const';
 import {logout} from '../../../store/api-actions';
 import { setUser } from '../../../store/action';
@@ -46,8 +48,8 @@ HeaderNavAuthorized.propTypes = {
   userData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({USER}) => ({
-  email: USER.user.email,
+const mapStateToProps = (state) => ({
+  email: getUserEmail(state),
 });
 
 const mapDispatchToProps = {

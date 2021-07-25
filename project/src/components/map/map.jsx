@@ -4,6 +4,8 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { connect } from 'react-redux';
 
+import {getActiveCard} from '../../store/ui/selectors';
+
 import offerProp from '../props/offer.prop';
 
 import useMap from '../../hooks/useMap/useMap';
@@ -74,6 +76,6 @@ Map.propTypes = {
   activeCard: PropTypes.number,
 };
 
-const mapStateToProps = ({UI}) => ({ activeCard: UI.activeCard });
+const mapStateToProps = (state) => ({ activeCard: getActiveCard(state) });
 
 export default connect(mapStateToProps)(Map);

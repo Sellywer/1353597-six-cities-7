@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import {getCity} from '../../../store/ui/selectors';
 import { changeCity } from '../../../store/action';
 import { fetchOffers } from '../../../store/api-actions';
 
@@ -37,8 +38,8 @@ CitiesList.propTypes = {
   loadOfferList: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({UI}) => ({
-  city: UI.city,
+const mapStateToProps = (state) => ({
+  city: getCity(state),
 });
 
 const mapDispatchToProps = {

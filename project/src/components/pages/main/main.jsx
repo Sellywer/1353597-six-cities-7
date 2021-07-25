@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import {getOffers} from '../../../store/data/selectors';
+import {getCity} from '../../../store/ui/selectors';
+
 import MainEmpty from '../../elements/main-empty/main-empty';
 import Header from '../../elements/header/header';
 import Map from '../../map/map';
@@ -63,9 +66,9 @@ Main.propTypes = {
   city: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({DATA, UI}) => ({
-  offers: DATA.offers,
-  city: UI.city,
+const mapStateToProps = (state) => ({
+  offers: getOffers(state),
+  city: getCity(state),
 });
 
 export default connect(mapStateToProps)(Main);

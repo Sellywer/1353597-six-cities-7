@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getLoadedDataStatus} from '../../store/data/selectors';
+
 import Main from '../pages/main/main';
 import PageFavorites from '../pages/favorites/favorites';
 import Offer from '../pages/offer/offer';
 import Login from '../pages/login/login';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { PrivateRoute } from '../../components/private-route/private-route';
+import {PrivateRoute} from '../../components/private-route/private-route';
 import browserHistory from '../../browser-history';
 
 import {AppRoute, AuthorizationStatus} from '../../const';
@@ -47,9 +50,9 @@ App.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({USER, DATA}) => ({
-  authorizationStatus: USER.authorizationStatus,
-  isDataLoaded: DATA.isDataLoaded,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  isDataLoaded: getLoadedDataStatus(state),
 });
 
 export default connect(mapStateToProps)(App);

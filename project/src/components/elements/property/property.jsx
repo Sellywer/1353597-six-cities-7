@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {useParams} from 'react-router-dom';
 
+import {getAuthorizationStatus} from '../../../store/user/selectors';
+import {getOffers, getReviews, getNearbyOffers, getOfferLoadedDataStatus} from '../../../store/data/selectors';
+
 import Map from '../../map/map';
 import {AuthorizationStatus} from '../../../const';
 
@@ -20,7 +23,7 @@ const MAX_ROOM_IMAGES = 6;
 
 function Property(props) {
 
-  const {offers = [], reviews = [], offersNearby=[], authorizationStatus } = props;
+  const {offers = [], reviews = [], offersNearby=[], authorizationStatus} = props;
 
   const GetId = () => {
     const { id } = useParams();
@@ -152,12 +155,12 @@ Property.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({DATA, USER}) => ({
-  offers: DATA.offers,
-  reviews: DATA.reviews,
-  authorizationStatus: USER.authorizationStatus,
-  offersNearby: DATA.offersNearby,
-  isOfferLoaded: DATA.isOfferLoaded,
+const mapStateToProps = (state) => ({
+  offers: getOffers(state),
+  reviews: getReviews(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  offersNearby: getNearbyOffers(state),
+  isOfferLoaded: getOfferLoadedDataStatus(state),
 });
 
 export default connect(mapStateToProps)(Property);

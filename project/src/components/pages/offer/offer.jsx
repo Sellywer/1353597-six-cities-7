@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {useParams} from 'react-router-dom';
 
+import {getOffers, getReviews, getNearbyOffers, getOfferLoadedDataStatus} from '../../../store/data/selectors';
+
 import Header from '../../elements/header/header';
 import { fetchReviewList, fetchOffer, fetchOffersNearby } from '../../../store/api-actions';
 
@@ -60,11 +62,11 @@ Offer.propTypes = {
   areLoadedOffersNearby: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  offers: DATA.offers,
-  reviews: DATA.reviews,
-  offersNearby: DATA.offersNearby,
-  isOfferLoaded: DATA.isOfferLoaded,
+const mapStateToProps = (state) => ({
+  offers: getOffers(state),
+  reviews: getReviews(state),
+  offersNearby: getNearbyOffers(state),
+  isOfferLoaded: getOfferLoadedDataStatus(state),
 });
 
 const mapDispatchToProps = {
