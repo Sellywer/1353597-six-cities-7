@@ -42,5 +42,4 @@ function UserAuth() {
   );
 }
 
-
 export default UserAuth;
