@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   CHANGE_CITY: '/changeCity',
   FILTER_OFFERS: 'offers/filterOffers',
@@ -15,65 +17,50 @@ export const ActionType = {
   SET_IS_OFFER_DATA_LOADED: 'offers/setIsOfferDataLoaded',
 };
 
-export const changeCity = (city) => ({
-  type: ActionType.CHANGE_CITY,
+export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
   payload: city,
-});
+}));
 
-export const requireAuthorization = (status) => ({
-  type: ActionType.REQUIRED_AUTHORIZATION,
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
-});
+}));
 
-export const redirectToRoute = (url) => ({
-  type: ActionType.REDIRECT_TO_ROUTE,
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
-});
+}));
 
-export const makeLogout = () => ({
-  type: ActionType.LOGOUT,
-});
+export const makeLogout = createAction(ActionType.LOGOUT);
 
-export const filterOffers = () => ({
-  type: ActionType.FILTER_OFFERS,
-});
+export const filterOffers = createAction(ActionType.FILTER_OFFERS);
 
-export const setUser = (userData) => ({
-  type: ActionType.SET_USER,
+export const setUser = createAction(ActionType.SET_USER, (userData) => ({
   payload: userData,
-});
+}));
 
-export const updateReviews = (reviews) => ({
-  type: ActionType.UPDATE_REVIEWS,
+export const updateReviews = createAction(ActionType.UPDATE_REVIEWS, (reviews) => ({
   payload: reviews,
-});
+}));
 
-export const hoverCard = (id) => ({
-  type: ActionType.HOVER_CARD,
+export const hoverCard = createAction(ActionType.HOVER_CARD, (id) => ({
   payload: id,
-});
+}));
 
-export const setOfferLoadingStatus = (isLoaded) => ({
-  type: ActionType.SET_IS_OFFER_DATA_LOADED,
+export const setOfferLoadingStatus = createAction(ActionType.SET_IS_OFFER_DATA_LOADED, (isLoaded) => ({
   payload: !isLoaded,
-});
+}));
 
-export const loadOffers = (offers) => ({
-  type: ActionType.LOAD_OFFERS,
+export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => ({
   payload: offers,
-});
+}));
 
-export const loadOffer = (offer) => ({
-  type: ActionType.LOAD_OFFER,
+export const loadOffer = createAction(ActionType.LOAD_OFFER, (offer) => ({
   payload: offer,
-});
+}));
 
-export const loadReviews = (reviews) => ({
-  type: ActionType.LOAD_REVIEWS,
+export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
   payload: reviews,
-});
+}));
 
-export const loadOffersNearby = (offers) => ({
-  type: ActionType.LOAD_OFFERS_NEARBY,
+export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (offers) => ({
   payload: offers,
-});
+}));

@@ -1,4 +1,5 @@
-import {ActionType} from '../action';
+import {createReducer} from '@reduxjs/toolkit';
+import {changeCity, filterOffers, hoverCard} from '../action';
 import {SortType} from '../../const';
 
 
@@ -10,26 +11,17 @@ const initialState = {
   sortType: SortType.POPULAR,
 };
 
-const ui = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.CHANGE_CITY:
-      return {
-        ...state,
-        city: action.payload,
-      };
-    case ActionType.FILTER_OFFERS:
-      return {
-        ...state,
-        sortType: action.payload,
-      };
-    case ActionType.HOVER_CARD:
-      return {
-        ...state,
-        activeCard: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+const ui = createReducer(initialState, (builder) => {
+  builder
+    .addCase(changeCity, (state, action) => {
+      state.city = action.payload;
+    })
+    .addCase(filterOffers, (state, action) => {
+      state.sortType = action.payload;
+    })
+    .addCase(hoverCard, (state, action) => {
+      state.activeCard = action.payload;
+    });
+});
 
 export {ui};
