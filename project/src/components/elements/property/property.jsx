@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import {useParams} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 import {getAuthorizationStatus} from '../../../store/user/selectors';
-import {getOffers, getReviews, getNearbyOffers, getOfferLoadedDataStatus} from '../../../store/data/selectors';
+import {getOffers, getReviews, getNearbyOffers} from '../../../store/data/selectors';
 
 import Map from '../../map/map';
 import {AuthorizationStatus} from '../../../const';
@@ -14,16 +13,16 @@ import NearPlaces from '../../elements/near-places/near-places';
 import ReviewsList from '../review-list/reviews-list';
 import ReviewForm from '../reviews-form/review-form';
 
-import offerProp from '../../props/offer.prop';
-import reviewsProp from '../../props/review.prop';
-
 import {calcRatingInPercent} from '../../../utils';
 
 const MAX_ROOM_IMAGES = 6;
 
-function Property(props) {
+function Property() {
 
-  const {offers = [], reviews = [], offersNearby=[], authorizationStatus} = props;
+  const offers = useSelector(getOffers);
+  const reviews = useSelector(getReviews);
+  const offersNearby = useSelector(getNearbyOffers);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const GetId = () => {
     const { id } = useParams();
@@ -148,19 +147,4 @@ function Property(props) {
   );
 }
 
-Property.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
-  offersNearby: PropTypes.arrayOf(offerProp).isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  offers: getOffers(state),
-  reviews: getReviews(state),
-  authorizationStatus: getAuthorizationStatus(state),
-  offersNearby: getNearbyOffers(state),
-  isOfferLoaded: getOfferLoadedDataStatus(state),
-});
-
-export default connect(mapStateToProps)(Property);
+export default Property;

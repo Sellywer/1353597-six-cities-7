@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import {getOffers} from '../../../store/data/selectors';
 import {getCity} from '../../../store/ui/selectors';
@@ -11,14 +10,15 @@ import Map from '../../map/map';
 import CardList from '../card-list/card-list';
 import CitiesList from '../../elements/cities-list/cities-list';
 import SortForm from '../../elements/sort-form/sort-form';
-import offerProp from '../../props/offer.prop';
 import {CITIES, SortType} from '../../../const';
 import {sortOffers} from '../../../utils';
 
 
-function Main(props) {
+function Main() {
 
-  const {offers, city} = props;
+  const offers = useSelector(getOffers);
+  const city = useSelector(getCity);
+
   const [ sortType, setSortType ] = useState(SortType.POPULAR);
 
   const offersForCity = sortOffers(sortType, offers).filter((offer) => offer.city.name === city);
@@ -61,15 +61,6 @@ function Main(props) {
   );
 }
 
-Main.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
-  city: PropTypes.string.isRequired,
-};
 
-const mapStateToProps = (state) => ({
-  offers: getOffers(state),
-  city: getCity(state),
-});
-
-export default connect(mapStateToProps)(Main);
+export default Main;
 

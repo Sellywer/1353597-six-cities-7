@@ -2,14 +2,13 @@ import React, {useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { connect } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import {getActiveCard} from '../../store/ui/selectors';
 
 import offerProp from '../props/offer.prop';
 
 import useMap from '../../hooks/useMap/useMap';
-
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl: 'img/pin.svg',
@@ -25,7 +24,8 @@ const currentCustomIcon = leaflet.icon({
 
 
 function Map(props) {
-  const {city, offers, activeCard } = props;
+  const {city, offers} = props;
+  const activeCard = useSelector(getActiveCard);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -73,9 +73,6 @@ Map.propTypes = {
     }),
     name: PropTypes.string.isRequired,
   }),
-  activeCard: PropTypes.number,
 };
 
-const mapStateToProps = (state) => ({ activeCard: getActiveCard(state) });
-
-export default connect(mapStateToProps)(Map);
+export default Map;

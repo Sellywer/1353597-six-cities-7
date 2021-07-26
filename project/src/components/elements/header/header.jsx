@@ -1,7 +1,6 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import {getAuthorizationStatus} from '../../../store/user/selectors';
 
@@ -11,7 +10,9 @@ import {AuthorizationStatus} from '../../../const';
 import Logo from '../logo/logo';
 
 
-function Header({ authorizationStatus }) {
+function Header() {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
   return (
     <header className="header">
       <div className="container">
@@ -30,12 +31,4 @@ function Header({ authorizationStatus }) {
   );
 }
 
-Header.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;

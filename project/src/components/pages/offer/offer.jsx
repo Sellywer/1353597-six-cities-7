@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import {useParams} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {getOffers, getReviews, getNearbyOffers, getOfferLoadedDataStatus} from '../../../store/data/selectors';
+import {getOffers, getReviews, getNearbyOffers} from '../../../store/data/selectors';
 
 import Header from '../../elements/header/header';
 import { fetchReviewList, fetchOffer, fetchOffersNearby } from '../../../store/api-actions';
@@ -11,12 +10,12 @@ import { fetchReviewList, fetchOffer, fetchOffersNearby } from '../../../store/a
 import Property from '../../elements/property/property';
 import PageNotFound from '../page-not-found/page-not-found';
 
-import offerProp from '../../props/offer.prop';
-import reviewsProp from '../../props/review.prop';
+function Offer() {
 
-function Offer(props) {
-
-  const {offers = [], reviews = [], offersNearby=[], loadReviewList, loadOfferData, areLoadedOffersNearby } = props;
+  const dispatch = useDispatch();
+  const offers = useSelector(getOffers);
+  const reviews = useSelector(getReviews);
+  const offersNearby = useSelector(getNearbyOffers);
 
   const GetId = () => {
     const { id } = useParams();
@@ -28,10 +27,10 @@ function Offer(props) {
   const offer = offers.find((item) => item.id === roomId);
 
   useEffect(() => {
-    loadOfferData(roomId);
-    loadReviewList(roomId);
-    areLoadedOffersNearby(roomId);
-  }, [roomId, loadOfferData, loadReviewList, areLoadedOffersNearby]);
+    dispatch(fetchOffer(roomId));
+    dispatch(fetchReviewList(roomId));
+    dispatch(fetchOffersNearby(roomId));
+  }, [roomId, dispatch]);
 
   if (offer === undefined) {
     return (
@@ -53,27 +52,4 @@ function Offer(props) {
   );
 }
 
-Offer.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
-  offersNearby: PropTypes.arrayOf(offerProp).isRequired,
-  loadReviewList: PropTypes.func.isRequired,
-  loadOfferData: PropTypes.func.isRequired,
-  areLoadedOffersNearby: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  offers: getOffers(state),
-  reviews: getReviews(state),
-  offersNearby: getNearbyOffers(state),
-  isOfferLoaded: getOfferLoadedDataStatus(state),
-});
-
-const mapDispatchToProps = {
-  loadReviewList: fetchReviewList,
-  loadOfferData: fetchOffer,
-  areLoadedOffersNearby: fetchOffersNearby,
-};
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Offer);
+export default Offer;
