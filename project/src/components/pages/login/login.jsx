@@ -1,34 +1,33 @@
 import React, {useRef } from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { CITIES } from '../../../const';
 
-import { ActionCreator } from '../../../store/action';
+import {redirectToRoute, changeCity} from '../../../store/action';
 import {login} from '../../../store/api-actions';
 import Header from '../../elements/header/header';
 
-function Login(props) {
+function Login() {
 
-  const {changeCity, onSubmit} = props;
-
+  const dispatch = useDispatch();
   const loginRef = useRef();
   const passwordRef = useRef();
+  const onCityChange = useSelector(changeCity);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
+    dispatch(redirectToRoute);
   };
 
   return (
     <div className="page page--gray page--login">
       <Header />
-
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -72,7 +71,7 @@ function Login(props) {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to="/">
-                <span onClick={() => changeCity(CITIES.AMSTERDAM)}>
+                <span onClick={() => onCityChange(CITIES.PARIS)}>
                   Amsterdam
                 </span>
               </Link>
@@ -84,16 +83,4 @@ function Login(props) {
   );
 }
 
-Login.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  changeCity: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = ({
-  onSubmit: login,
-  changeCity: ActionCreator.changeCity,
-  redirectToRoute: ActionCreator.redirectToRoute,
-});
-
-export {Login};
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;

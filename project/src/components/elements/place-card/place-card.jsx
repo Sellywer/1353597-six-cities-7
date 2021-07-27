@@ -1,15 +1,16 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Link, generatePath} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import offerProp from '../../props/offer.prop';
 
 import {AppRoute, CardType} from '../../../const';
-import { ActionCreator } from '../../../store/action';
+import {setActiveOffer} from '../../../store/action';
+import { sendFavoritePlace } from '../../../store/api-actions';
 import {calcRatingInPercent} from '../../../utils';
 
-function PlaceCard({offer, cardType = CardType.MAIN_TYPE, hoverCard}) {
+function PlaceCard({offer, cardType = CardType.MAIN_TYPE}) {
   const {
     id,
     price,
@@ -20,16 +21,22 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, hoverCard}) {
     isFavorite,
   } = offer;
 
-  useEffect(() => () => {
-    hoverCard(null);
-  });
+  const dispatch = useDispatch();
+
+  const handleMouseEnter = () => {
+    dispatch(setActiveOffer(+id));
+  };
+
+  const handleMouseLeave = () => {
+    dispatch(setActiveOffer(null));
+  };
 
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
   return (
     <article className={`${articleClassName} place-card`}
-      onMouseEnter={() => cardType === CardType.MAIN_PAGE && hoverCard(id)}
-      onMouseLeave={() => cardType === CardType.MAIN_PAGE && hoverCard(null)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isPremium ?
         <div className="place-card__mark">
@@ -50,7 +57,14 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, hoverCard}) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button${isFavorite ? ' place-card__bookmark-button--active' : ''}`} type="button">
+          <button
+            className={`place-card__bookmark-button button ${isFavorite ? ' place-card__bookmark-button--active' : ''}`}
+            type="button"
+            onClick={() => {
+              const newFavoriteState = isFavorite ? '0' : '1';
+              dispatch(sendFavoritePlace(id, newFavoriteState));
+            }}
+          >
             <svg className="place-card__bookmark-icon"
               width="18" height="19"
             >
@@ -86,11 +100,6 @@ PlaceCard.propTypes = {
     imgWidth: PropTypes.string,
     imgHeight: PropTypes.string,
   }).isRequired,
-  hoverCard: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  hoverCard: ActionCreator.hoverCard,
-};
-
-export default connect(null, mapDispatchToProps)(PlaceCard);
+export default PlaceCard;

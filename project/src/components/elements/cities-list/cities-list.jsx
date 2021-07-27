@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {useSelector, useDispatch } from 'react-redux';
 
-import { ActionCreator } from '../../../store/action';
-import { fetchOffers } from '../../../store/api-actions';
+import {getCity} from '../../../store/ui/selectors';
+import {changeCity} from '../../../store/action';
+import {fetchOffers} from '../../../store/api-actions';
 
-function CitiesList({ locations, city, changeCity, loadOfferList }) {
+function CitiesList({locations}) {
+
+  const city = useSelector(getCity);
+  const dispatch = useDispatch();
+
   return (
     <ul className="locations__list tabs__list">
       {locations.map((item) => (
         <li key={item} className="locations__item">
           <a
             onClick={() => {
-              changeCity(item);
-              loadOfferList();
+              dispatch(changeCity(item));
+              dispatch(fetchOffers);
             }}
             className={
               city === item
@@ -32,18 +37,6 @@ function CitiesList({ locations, city, changeCity, loadOfferList }) {
 
 CitiesList.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  city: PropTypes.string.isRequired,
-  changeCity: PropTypes.func.isRequired,
-  loadOfferList: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ city }) => ({
-  city,
-});
-
-const mapDispatchToProps = {
-  changeCity: ActionCreator.changeCity,
-  loadOfferList: fetchOffers,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CitiesList);
+export default CitiesList;

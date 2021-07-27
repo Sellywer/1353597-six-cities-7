@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RewiewProp from '../../props/review.prop';
-import ReviewItem from './review-item';
+import ReviewItem from '../review-item/review-item';
 
 function ReviewsList(props) {
 

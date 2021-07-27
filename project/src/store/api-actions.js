@@ -1,71 +1,86 @@
-import {ActionCreator} from './action';
+import {loadFavorites, updateFavorites, updateReviews, loadOffers, loadOffer, loadReviews, loadOffersNearby, requireAuthorization, redirectToRoute, makeLogout, setUser } from './action';
 import {AuthorizationStatus, APIRoute, AppRoute} from '../const';
 import {adaptOfferToClient, adaptCommentToClient} from '../adapter/adapter';
 
+export const fetchFavoriteList = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVORITES)
+    .then(({data}) => {
+      dispatch(loadFavorites(data.map((offer) => adaptOfferToClient(offer)),
+      ));
+    })
+);
+
+export const sendFavoritePlace = (id, status) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITES}/${id}/${status}`)
+    .then(({data}) => {
+      dispatch(updateFavorites(adaptOfferToClient(data)));
+      dispatch(loadOffer(adaptOfferToClient(data)));
+    })
+);
+
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
-    .then(({data}) => {
-      const offers = data.map((offer) => adaptOfferToClient(offer));
-      return offers;
-    })
-    .then((offers) => dispatch(ActionCreator.loadOffers(offers)))
+    .then(({data}) => dispatch(loadOffers(data.map(adaptOfferToClient))))
 );
 
 export const fetchOffer = (id) => (dispatch, _getState, api) => (
-  api.get(`{APIRoute.OFFERS}${id}`)
+  api.get(`${APIRoute.OFFERS}/${id}`)
     .then(({data}) => {
-      const offer = adaptOfferToClient(data);
-      return offer;
+      dispatch(loadOffer(adaptOfferToClient(data)));
     })
-    .then((offer) => dispatch(ActionCreator.loadOffer(offer)))
+    .catch(() => {
+      dispatch(redirectToRoute(AppRoute.NOT_FOUND));
+    })
 );
 
 export const fetchReviewList = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.REVIEWS}/${id}`)
     .then(({ data }) => {
-      dispatch(ActionCreator.loadReviews(
+      dispatch(loadReviews(
         data.map((review) => adaptCommentToClient(review)),
       ));
     })
+    .catch(() => dispatch(loadReviews([])))
 );
 
-export const fetchOffersNearby = (roomid) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.OFFERS}/${roomid}/nearby`)
+export const fetchOffersNearby = (roomId) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.OFFERS}/${roomId}/nearby`)
     .then(({data}) => {
       const offers = data.map((offer) => adaptOfferToClient(offer));
       return offers;
     })
-    .then((offers) => dispatch(ActionCreator.loadOffersNearby(offers)))
-    .catch(() => dispatch(ActionCreator.loadOffersNearby([])))
+    .then((offers) => dispatch(loadOffersNearby(offers)))
+    .catch(() => dispatch(loadOffersNearby([])))
 );
 
 export const postComment = (id, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.REVIEWS}/${id}`, {comment, rating})
     .then(({data}) => {
-      dispatch(ActionCreator.updateReviews(data.map((review) => adaptCommentToClient(review))));
+      dispatch(updateReviews(data.map((review) => adaptCommentToClient(review))));
+      dispatch(loadReviews(data.map((review) => adaptCommentToClient(review))));
     })
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => {
-      dispatch(ActionCreator.setUser(data));
+      dispatch(setUser(data));
       localStorage.setItem('token', data.token);
     })
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
-    .then(() => dispatch(ActionCreator.logout()))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)))
+    .then(() => dispatch(makeLogout()))
+    .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
 );
 
