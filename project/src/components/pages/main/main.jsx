@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {useSelector} from 'react-redux';
 
 import {getOffers} from '../../../store/data/selectors';
-import {getCity} from '../../../store/ui/selectors';
+import {getCity, getSortType} from '../../../store/ui/selectors';
 
 import MainEmpty from '../../elements/main-empty/main-empty';
 import Header from '../../elements/header/header';
@@ -10,7 +10,7 @@ import Map from '../../map/map';
 import CardList from '../card-list/card-list';
 import CitiesList from '../../elements/cities-list/cities-list';
 import SortForm from '../../elements/sort-form/sort-form';
-import {CITIES, SortType} from '../../../const';
+import {CITIES} from '../../../const';
 import {sortOffers} from '../../../utils';
 
 
@@ -18,10 +18,14 @@ function Main() {
 
   const offers = useSelector(getOffers);
   const city = useSelector(getCity);
+  const activeSortType = useSelector(getSortType);
 
-  const [ sortType, setSortType ] = useState(SortType.POPULAR);
+  const sortedOffers = sortOffers(activeSortType, offers);
 
-  const offersForCity = sortOffers(sortType, offers).filter((offer) => offer.city.name === city);
+  // eslint-disable-next-line no-console
+  console.log(activeSortType);
+
+  const offersForCity = sortedOffers.filter((offer) => offer.city.name === city);
 
   if (!offers.length) {
     return <MainEmpty locations={CITIES} />;
@@ -44,7 +48,7 @@ function Main() {
               <b className="places__found">
                 {offersForCity.length} places to stay in {city}
               </b>
-              <SortForm initialSorting={sortType} onSortingChange={setSortType}/>
+              <SortForm />
               <div className="cities__places-list places__list tabs__content">
                 <CardList offers={offersForCity} />
               </div>

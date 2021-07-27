@@ -2,7 +2,7 @@ import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
   CHANGE_CITY: '/changeCity',
-  FILTER_OFFERS: 'offers/filterOffers',
+  CHANGE_SORT_TYPE: 'ui/changeSortType',
   SET_ACTIVE_OFFER: 'offers/setActiveOffer',
   LOAD_OFFERS: 'data/loadOffers',
   LOAD_OFFER: 'data/loadOffer',
@@ -46,7 +46,9 @@ export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) 
 
 export const makeLogout = createAction(ActionType.LOGOUT);
 
-export const filterOffers = createAction(ActionType.FILTER_OFFERS);
+export const changeSortType = createAction(ActionType.CHANGE_SORT_TYPE, (sortType) => ({
+  payload: sortType,
+}));
 
 export const setUser = createAction(ActionType.SET_USER, (userData) => ({
   payload: userData,
