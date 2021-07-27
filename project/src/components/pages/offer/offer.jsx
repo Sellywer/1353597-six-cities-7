@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {getOffers, getReviews, getNearbyOffers} from '../../../store/data/selectors';
+import {getOffers, getReviews, getNearbyOffers, getFavorites} from '../../../store/data/selectors';
 
 import Header from '../../elements/header/header';
 import { fetchReviewList, fetchOffer, fetchOffersNearby } from '../../../store/api-actions';
@@ -16,6 +16,7 @@ function Offer() {
   const offers = useSelector(getOffers);
   const reviews = useSelector(getReviews);
   const offersNearby = useSelector(getNearbyOffers);
+  const offersFavorite = useSelector(getFavorites);
 
   const GetId = () => {
     const { id } = useParams();
@@ -46,6 +47,7 @@ function Offer() {
           offer={offer}
           reviews={reviews}
           offersNearby={offersNearby}
+          offersFavorite={offersFavorite}
         />
       </main>
     </div>

@@ -18,7 +18,6 @@ function SortForm() {
 
   const handleSortChange = (type) => {
     dispatch(changeSortType(type));
-    // setIsSortListOpen(false);
     handleSortClick();
   };
 

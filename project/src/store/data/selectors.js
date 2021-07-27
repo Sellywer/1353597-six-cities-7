@@ -10,3 +10,4 @@ export const getReviewsLoadedDataStatus = (state) => state[NameSpace.DATA].areRe
 export const getLoadedOffersNearbyStatus = (state) => state[NameSpace.DATA].areLoadedOffersNearby;
 
 export const getCommentSendingStatus = (state) => state[NameSpace.DATA].isCommentSend;
+export const getFavorites = (state) => state[NameSpace.DATA].favorites;

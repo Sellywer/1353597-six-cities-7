@@ -1,9 +1,9 @@
 import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
-  CHANGE_CITY: '/changeCity',
+  CHANGE_CITY: 'ui/changeCity',
   CHANGE_SORT_TYPE: 'ui/changeSortType',
-  SET_ACTIVE_OFFER: 'offers/setActiveOffer',
+  SET_ACTIVE_OFFER: 'ui/setActiveOffer',
   LOAD_OFFERS: 'data/loadOffers',
   LOAD_OFFER: 'data/loadOffer',
   LOAD_REVIEWS: 'data/loadReviews',
@@ -11,14 +11,22 @@ export const ActionType = {
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'cities/redirectToRoute',
   SET_USER: 'user/setUser',
-  LOAD_COMMENTS: 'comments/loadComments',
+  LOAD_COMMENTS: 'data/loadComments',
   LOAD_OFFERS_NEARBY: 'data/loadOffersNearby',
-  SET_IS_OFFER_DATA_LOADED: 'offers/setIsOfferDataLoaded',
-  UPDATE_REVIEWS: 'comments/updateReviews',
+  SET_IS_OFFER_DATA_LOADED: 'data/setIsOfferDataLoaded',
+  UPDATE_REVIEWS: 'data/updateReviews',
   CHANGE_COMMENT_SENDING_STATUS: 'changeCommentSendingStatus',
-  ADD_COMMENT: 'addComment',
-  ADD_RATING: 'addRating',
+  LOAD_FAVORITES: 'data/loadFavorites',
+  UPDATE_FAVORITES: 'data/updateFavorites',
 };
+
+export const loadFavorites = createAction(ActionType.LOAD_FAVORITES, (payload) => ({
+  payload,
+}));
+
+export const updateFavorites = createAction(ActionType.UPDATE_FAVORITES, (payload) => ({
+  payload,
+}));
 
 export const updateReviews = createAction(ActionType.UPDATE_REVIEWS, (reviews) => ({
   payload: reviews,
@@ -26,10 +34,6 @@ export const updateReviews = createAction(ActionType.UPDATE_REVIEWS, (reviews) =
 
 export const changeCommentSendingStatus = createAction(ActionType.CHANGE_COMMENT_SENDING_STATUS, (status) => ({
   payload: status,
-}));
-
-export const addRating = createAction(ActionType.ADD_RATING, (rating) => ({
-  payload: rating,
 }));
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({

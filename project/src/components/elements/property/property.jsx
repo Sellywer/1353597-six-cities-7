@@ -1,12 +1,13 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {getAuthorizationStatus} from '../../../store/user/selectors';
 import {getOffers, getReviews, getNearbyOffers} from '../../../store/data/selectors';
-
+import { sendFavoritePlace } from '../../../store/api-actions';
+import { redirectToRoute } from '../../../store/action';
 import Map from '../../map/map';
-import {AuthorizationStatus} from '../../../const';
+import {AuthorizationStatus, AppRoute } from '../../../const';
 
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import NearPlaces from '../../elements/near-places/near-places';
@@ -24,6 +25,8 @@ function Property() {
   const offersNearby = useSelector(getNearbyOffers);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
+  const dispatch = useDispatch();
+
   const GetId = () => {
     const { id } = useParams();
     return Number(id);
@@ -32,6 +35,12 @@ function Property() {
   const roomId = GetId();
 
   const offer = offers.find((item) => item.id === roomId);
+
+  const status = offer.isFavorite ? '0' : '1';
+
+  const handleButtonClick = () => {
+    dispatch(sendFavoritePlace(roomId, status));
+  };
 
   if (offer === undefined) {
     return (
@@ -61,13 +70,19 @@ function Property() {
               <h1 className="property__name">
                 {offer.title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
+              <button
+                className={
+                  offer.isFavorite
+                    ? 'property__bookmark-button property__bookmark-button--active button'
+                    : 'property__bookmark-button button'
+                }
+                type="button"
+                onClick={authorizationStatus === AuthorizationStatus.AUTH
+                  ? handleButtonClick
+                  : () => dispatch(redirectToRoute(AppRoute.SING_IN))}
+              >
                 <svg className="property__bookmark-icon"
                   width="31" height="33"
-                  style = {{
-                    fill: `${offer.isFavorite && '#4481c3'}`,
-                    stroke: `${offer.isFavorite ? '#4481c3' : '#979797'}`,
-                  }}
                 >
                   <use xlinkHref="#icon-bookmark"></use>
                 </svg>

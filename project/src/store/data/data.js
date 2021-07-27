@@ -5,7 +5,9 @@ import {
   loadOffer,
   loadReviews,
   loadOffersNearby,
-  changeCommentSendingStatus
+  changeCommentSendingStatus,
+  loadFavorites,
+  updateFavorites
   //setRoomLoadingStatus
 } from '../action';
 
@@ -23,6 +25,18 @@ const initialState = {
 
 const data = createReducer(initialState, (builder) => {
   builder
+    .addCase(loadFavorites, (state, action) => {
+      state.favorites = action.payload;
+    })
+    .addCase(updateFavorites, (state, action) => {
+      const updatedOffer = action.payload;
+      const idx = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
+      state.offers = [
+        ...state.offers.slice(0, idx),
+        updatedOffer,
+        ...state.offers.slice(idx + 1),
+      ];
+    })
     .addCase(loadOffers, (state, action) => {
       state.isDataLoaded = true;
       state.offers = action.payload;
@@ -48,12 +62,6 @@ const data = createReducer(initialState, (builder) => {
     }); */
   /*  .addCase(хз, (state, action) => {
       state.areLoadedOffersNearby = action.payload;
-    }); */
-  /*  .addCase(хз, (state, action) => {
-      //         ...state,
-//         ...state.detailedData,
-//         reviews: action.payload,
-      state.reviews = action.payload;
     }); */
 });
 

@@ -1,6 +1,22 @@
-import {updateReviews, loadOffers, loadOffer, loadReviews, loadOffersNearby, requireAuthorization, redirectToRoute, makeLogout, setUser } from './action';
+import {loadFavorites, updateFavorites, updateReviews, loadOffers, loadOffer, loadReviews, loadOffersNearby, requireAuthorization, redirectToRoute, makeLogout, setUser } from './action';
 import {AuthorizationStatus, APIRoute, AppRoute} from '../const';
 import {adaptOfferToClient, adaptCommentToClient} from '../adapter/adapter';
+
+export const fetchFavoriteList = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVORITES)
+    .then(({data}) => {
+      dispatch(loadFavorites(data.map((offer) => adaptOfferToClient(offer)),
+      ));
+    })
+);
+
+export const sendFavoritePlace = (id, status) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITES}/${id}/${status}`)
+    .then(({data}) => {
+      dispatch(updateFavorites(adaptOfferToClient(data)));
+      dispatch(loadOffer(adaptOfferToClient(data)));
+    })
+);
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)

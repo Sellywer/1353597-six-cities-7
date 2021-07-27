@@ -22,9 +22,6 @@ function Main() {
 
   const sortedOffers = sortOffers(activeSortType, offers);
 
-  // eslint-disable-next-line no-console
-  console.log(activeSortType);
-
   const offersForCity = sortedOffers.filter((offer) => offer.city.name === city);
 
   if (!offers.length) {

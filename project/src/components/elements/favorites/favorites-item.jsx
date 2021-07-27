@@ -11,7 +11,7 @@ function FavoritesItem(props) {
 
   const {favoritesOffers, favoritesCity} = props;
 
-  const offers = favoritesOffers.filter((item) => item.city.name === favoritesCity);
+  const offers = favoritesOffers.filter((offer) => offer.city.name === favoritesCity);
 
   return (
     <li className="favorites__locations-items">
@@ -24,7 +24,7 @@ function FavoritesItem(props) {
       </div>
       <div className="favorites__places">
         {offers.map((offer) => (
-          <PlaceCard key={offer.id} offer={offer} cardType={CardType['FAVORITES_PAGE']}/>))}
+          <PlaceCard key={offer.id} offer={offer} cardType={CardType.FAVORITES_PAGE}/>))}
       </div>
     </li>
   );
