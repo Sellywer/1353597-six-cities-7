@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Ratings} from '../../../const';
-function RatingList({rating, setRating}) {
+
+function RatingList({rating, setRating }) {
   return (
     <div className="reviews__rating-form form__rating">
-      {Object.values(Ratings).map(({value, title}) => (
-        <React.Fragment key={title}>
+      {(Ratings).map(({value, title}) => (
+        <React.Fragment key={value}>
           <input
             className="form__rating-input visually-hidden"
             name="rating"
@@ -30,8 +31,8 @@ function RatingList({rating, setRating}) {
 }
 
 RatingList.propTypes = {
-  rating: PropTypes.number,
+  rating: PropTypes.number.isRequired,
   setRating: PropTypes.func.isRequired,
 };
 
-export default RatingList;
+export default React.memo(RatingList);

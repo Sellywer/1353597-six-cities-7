@@ -15,6 +15,8 @@ export function ReviewText({comment, setComment}) {
       placeholder="Tell how was your stay, what you like and what can be improved"
       value={comment}
       onChange={commentChange}
+      minLength={50}
+      maxLength={300}
     />
   );
 }

@@ -3,7 +3,7 @@ import {createAction} from '@reduxjs/toolkit';
 export const ActionType = {
   CHANGE_CITY: '/changeCity',
   FILTER_OFFERS: 'offers/filterOffers',
-  HOVER_CARD: 'card/hoverCard',
+  SET_ACTIVE_OFFER: 'offers/setActiveOffer',
   LOAD_OFFERS: 'data/loadOffers',
   LOAD_OFFER: 'data/loadOffer',
   LOAD_REVIEWS: 'data/loadReviews',
@@ -13,9 +13,24 @@ export const ActionType = {
   SET_USER: 'user/setUser',
   LOAD_COMMENTS: 'comments/loadComments',
   LOAD_OFFERS_NEARBY: 'data/loadOffersNearby',
-  UPDATE_REVIEWS: 'comments/updateReviews',
   SET_IS_OFFER_DATA_LOADED: 'offers/setIsOfferDataLoaded',
+  UPDATE_REVIEWS: 'comments/updateReviews',
+  CHANGE_COMMENT_SENDING_STATUS: 'changeCommentSendingStatus',
+  ADD_COMMENT: 'addComment',
+  ADD_RATING: 'addRating',
 };
+
+export const updateReviews = createAction(ActionType.UPDATE_REVIEWS, (reviews) => ({
+  payload: reviews,
+}));
+
+export const changeCommentSendingStatus = createAction(ActionType.CHANGE_COMMENT_SENDING_STATUS, (status) => ({
+  payload: status,
+}));
+
+export const addRating = createAction(ActionType.ADD_RATING, (rating) => ({
+  payload: rating,
+}));
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
   payload: city,
@@ -37,12 +52,8 @@ export const setUser = createAction(ActionType.SET_USER, (userData) => ({
   payload: userData,
 }));
 
-export const updateReviews = createAction(ActionType.UPDATE_REVIEWS, (reviews) => ({
-  payload: reviews,
-}));
-
-export const hoverCard = createAction(ActionType.HOVER_CARD, (id) => ({
-  payload: id,
+export const setActiveOffer = createAction(ActionType.SET_ACTIVE_OFFER, (activeOfferId) => ({
+  payload: activeOfferId,
 }));
 
 export const setOfferLoadingStatus = createAction(ActionType.SET_IS_OFFER_DATA_LOADED, (isLoaded) => ({

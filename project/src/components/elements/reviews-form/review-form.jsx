@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
+import {getCommentSendingStatus} from '../../../store/data/selectors';
 import {postComment} from '../../../store/api-actions';
 import ReviewText from '../review-text/review-text';
 import RatingList from '../rating-list/rating-list';
@@ -16,23 +17,36 @@ export function ReviewForm(props) {
   const isButtonDisabled = rating === null || comment.length < MIN_CHARS_COUNT
   || comment.length > MAX_CHARS_COUNT;
 
-  const {onSubmit, id} = props;
+  const {id} = props;
+  const dispatch = useDispatch();
+  const isCommentSend = useSelector(getCommentSendingStatus);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit(
+    dispatch(postComment(
       id,
       {comment, rating},
-    );
+    ));
 
     setRating(0);
     setComment('');
   };
 
+  useEffect(() => {
+    if (isCommentSend) {
+      setComment('');
+      setRating(0);
+    }
+  }, [isCommentSend]);
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={handleSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <RatingList rating={rating} setRating={setRating} />
       <ReviewText comment={comment} setComment={setComment} />
@@ -55,13 +69,6 @@ export function ReviewForm(props) {
 
 ReviewForm.propTypes = {
   id: PropTypes.number,
-  onSubmit: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, commentData) {
-    dispatch(postComment(id, commentData));
-  },
-});
-
-export default connect(null, mapDispatchToProps)(ReviewForm);
+export default ReviewForm;

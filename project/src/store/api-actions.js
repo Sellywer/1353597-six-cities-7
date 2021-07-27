@@ -1,4 +1,4 @@
-import {loadOffers, loadOffer, loadReviews, loadOffersNearby, requireAuthorization, redirectToRoute, makeLogout, setUser, updateReviews } from './action';
+import {updateReviews, loadOffers, loadOffer, loadReviews, loadOffersNearby, requireAuthorization, redirectToRoute, makeLogout, setUser } from './action';
 import {AuthorizationStatus, APIRoute, AppRoute} from '../const';
 import {adaptOfferToClient, adaptCommentToClient} from '../adapter/adapter';
 
@@ -41,6 +41,7 @@ export const postComment = (id, {comment, rating}) => (dispatch, _getState, api)
   api.post(`${APIRoute.REVIEWS}/${id}`, {comment, rating})
     .then(({data}) => {
       dispatch(updateReviews(data.map((review) => adaptCommentToClient(review))));
+      dispatch(loadReviews(data.map((review) => adaptCommentToClient(review))));
     })
 );
 

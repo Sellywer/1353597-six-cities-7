@@ -4,7 +4,8 @@ import {
   loadOffers,
   loadOffer,
   loadReviews,
-  loadOffersNearby
+  loadOffersNearby,
+  changeCommentSendingStatus
   //setRoomLoadingStatus
 } from '../action';
 
@@ -17,6 +18,7 @@ const initialState = {
   areReviewsLoaded: false,
   areLoadedOffersNearby: false,
   offersNearby: [],
+  isCommentSend: false,
 };
 
 const data = createReducer(initialState, (builder) => {
@@ -34,6 +36,9 @@ const data = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffersNearby, (state, action) => {
       state.offersNearby = action.payload;
+    })
+    .addCase(changeCommentSendingStatus, (state, action) => {
+      state.isCommentSend = action.payload;
     });
   /*  .addCase(setRoomLoadingStatus, (state, action) => {
       state.isOfferLoaded = action.payload;

@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Link, generatePath} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import offerProp from '../../props/offer.prop';
 
 import {AppRoute, CardType} from '../../../const';
-import { hoverCard } from '../../../store/action';
+import {setActiveOffer} from '../../../store/action';
 import {calcRatingInPercent} from '../../../utils';
 
-function PlaceCard({offer, cardType = CardType.MAIN_TYPE, onHoverCard}) {
+function PlaceCard({offer, cardType = CardType.MAIN_TYPE}) {
   const {
     id,
     price,
@@ -20,16 +20,22 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, onHoverCard}) {
     isFavorite,
   } = offer;
 
-  useEffect(() => () => {
-    onHoverCard(null);
-  });
+  const dispatch = useDispatch();
+
+  const handleMouseEnter = () => {
+    dispatch(setActiveOffer(+id));
+  };
+
+  const handleMouseLeave = () => {
+    dispatch(setActiveOffer(null));
+  };
 
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
   return (
     <article className={`${articleClassName} place-card`}
-      onMouseEnter={() => cardType === CardType.MAIN_PAGE && onHoverCard(id)}
-      onMouseLeave={() => cardType === CardType.MAIN_PAGE && onHoverCard(null)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isPremium ?
         <div className="place-card__mark">
@@ -86,11 +92,6 @@ PlaceCard.propTypes = {
     imgWidth: PropTypes.string,
     imgHeight: PropTypes.string,
   }).isRequired,
-  onHoverCard: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  onHoverCard: hoverCard,
-};
-
-export default connect(null, mapDispatchToProps)(PlaceCard);
+export default PlaceCard;

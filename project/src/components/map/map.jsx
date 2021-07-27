@@ -4,7 +4,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useSelector} from 'react-redux';
 
-import {getActiveCard} from '../../store/ui/selectors';
+import {getActiveOfferId} from '../../store/ui/selectors';
 
 import offerProp from '../props/offer.prop';
 
@@ -25,7 +25,7 @@ const currentCustomIcon = leaflet.icon({
 
 function Map(props) {
   const {city, offers} = props;
-  const activeCard = useSelector(getActiveCard);
+  const activeOfferId  = useSelector(getActiveOfferId);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -39,7 +39,7 @@ function Map(props) {
             lat: latitude,
             lng: longitude,
           }, {
-            icon: activeCard === id ? currentCustomIcon : defaultCustomIcon,
+            icon: activeOfferId === id ? currentCustomIcon : defaultCustomIcon,
           })
           .addTo(markers);
       });
@@ -52,7 +52,7 @@ function Map(props) {
       markers.clearLayers();
     };
 
-  }, [map, offers, activeCard, city]);
+  }, [map, offers, activeOfferId, city]);
 
   return (
     <div

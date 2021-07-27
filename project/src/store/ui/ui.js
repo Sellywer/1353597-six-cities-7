@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, filterOffers, hoverCard} from '../action';
+import {changeCity, filterOffers, setActiveOffer} from '../action';
 import {SortType} from '../../const';
 
 
@@ -7,7 +7,7 @@ const DEFAULT_CITY = 'Paris';
 
 const initialState = {
   city: DEFAULT_CITY,
-  activeCard: null,
+  activeOfferId: null,
   sortType: SortType.POPULAR,
 };
 
@@ -19,8 +19,8 @@ const ui = createReducer(initialState, (builder) => {
     .addCase(filterOffers, (state, action) => {
       state.sortType = action.payload;
     })
-    .addCase(hoverCard, (state, action) => {
-      state.activeCard = action.payload;
+    .addCase(setActiveOffer, (state, action) => {
+      state.activeOfferId = action.payload;
     });
 });
 
