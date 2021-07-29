@@ -14,7 +14,8 @@ import NearPlaces from '../../elements/near-places/near-places';
 import ReviewsList from '../review-list/reviews-list';
 import ReviewForm from '../reviews-form/review-form';
 
-import {calcRatingInPercent} from '../../../utils';
+import {calcRatingInPercent, uppercaseFirstLetter} from '../../../utils';
+import { getActiveOfferId } from '../../../store/ui/selectors';
 
 const MAX_ROOM_IMAGES = 6;
 
@@ -24,6 +25,7 @@ function Property() {
   const reviews = useSelector(getReviews);
   const offersNearby = useSelector(getNearbyOffers);
   const authorizationStatus = useSelector(getAuthorizationStatus);
+  const activeCard = useSelector(getActiveOfferId);
 
   const dispatch = useDispatch();
 
@@ -98,7 +100,7 @@ function Property() {
             </div>
             <ul className="property__features">
               <li className="property__feature property__feature--entire">
-                {offer.type}
+                {uppercaseFirstLetter(offer.type)}
               </li>
               <li className="property__feature property__feature--bedrooms">
                 {offer.bedrooms} Bedrooms
@@ -130,10 +132,11 @@ function Property() {
                 <span className="property__user-name">
                   {offer.host.name}
                 </span>
-                {offer.host.isPro ?
+                {offer.host.isPro && (
                   <span className="property__user-status">
                     Pro
-                  </span> : ''}
+                  </span>
+                )}
               </div>
               <div className="property__description">
                 <p className="property__text">
@@ -150,7 +153,11 @@ function Property() {
           </div>
         </div>
         <section className="property__map map">
-          <Map city={offers[0].city} offers={[offer, ...offersNearby]} activeCard={offer}/>
+          <Map city={offers[0].city} offers={[offer, ...offersNearby]}
+            onMouseEnter={() => {
+              activeCard(offer.id);
+            }}
+          />
         </section>
       </section>
       <div className="container">

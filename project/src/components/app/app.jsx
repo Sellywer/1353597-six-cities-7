@@ -6,7 +6,7 @@ import {getAuthorizationStatus} from '../../store/user/selectors';
 import {getLoadedDataStatus} from '../../store/data/selectors';
 
 import Main from '../pages/main/main';
-import PageFavorites from '../pages/favorites/favorites';
+import Favorites from '../pages/favorites/favorites';
 import Offer from '../pages/offer/offer';
 import Login from '../pages/login/login';
 import PageNotFound from '../pages/page-not-found/page-not-found';
@@ -34,7 +34,7 @@ function App() {
         <Route exact path={AppRoute.SIGN_IN} component={Login}/>
         <PrivateRoute exact path={AppRoute.FAVORITES}
           authorizationStatus={authorizationStatus}
-          render={() => <PageFavorites />}
+          render={() => <Favorites />}
         />
         <Route exact path={AppRoute.ROOM} component={Offer} />
         <Route>

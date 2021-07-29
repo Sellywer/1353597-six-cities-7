@@ -1,4 +1,4 @@
-import React, {useRef, useEffect } from 'react';
+import React, {useRef, useEffect, memo} from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -47,6 +47,7 @@ function Map(props) {
         [offers[0].city.location.latitude, offers[0].city.location.longitude],
         offers[0].city.location.zoom,
       );
+      map.scrollWheelZoom.disable();
     }
     return () => {
       markers.clearLayers();
@@ -75,4 +76,4 @@ Map.propTypes = {
   }),
 };
 
-export default Map;
+export default memo(Map);

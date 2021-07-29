@@ -25,6 +25,34 @@ function Login() {
     dispatch(redirectToRoute);
   };
 
+  const setEmailValidation = () => {
+    const emailInput = loginRef.current;
+    let validationMessage = '';
+
+    if (loginRef.current.validity.patternMismatch) {
+      validationMessage = 'Заполните адрес электронной почты в соответствии с указанным примером. Пример корректного адреса: info@wikipedia.org';
+    } else if (loginRef.current.validity.valueMissing) {
+      validationMessage = 'Заполните это поле';
+    } else {
+      validationMessage = '';
+    }
+
+    emailInput.setCustomValidity(validationMessage);
+  };
+
+
+  const setPasswordValidation = () => {
+    const passwordInput = passwordRef.current;
+    let validationMessage = '';
+
+    if (passwordInput.value && !passwordInput.value.split('').find((symbol) => symbol !== ' ')) {
+      validationMessage = 'Пароль не должен состоять только из пробелов';
+    }
+
+    passwordInput.setCustomValidity(validationMessage);
+    passwordInput.reportValidity();
+  };
+
   return (
     <div className="page page--gray page--login">
       <Header />
@@ -56,13 +84,15 @@ function Login() {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  required=""
+                  required
                   ref={passwordRef}
+                  onInput={setPasswordValidation}
                 />
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
+                onClick={setEmailValidation}
               >
                 Sign in
               </button>

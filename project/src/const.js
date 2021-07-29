@@ -17,7 +17,7 @@ export const APIRoute = {
   REVIEWS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
-  FAVORITES: '/favorite',
+  FAVORITE: '/favorite',
 };
 
 export const CardType = {
@@ -58,34 +58,34 @@ export const CITIES = [
   'Dusseldorf',
 ];
 
-export const SortTypes = {
+export const SortType = {
   POPULAR: 'Popular',
   PRICE_LOW: 'Price: low to high',
   PRICE_HIGH: 'Price: high to low',
   TOP_RATED: 'Top rated first',
 };
 
-export const DEFAULT_SORT_TYPE = SortTypes.POPULAR;
+export const DEFAULT_SORT_TYPE = SortType.POPULAR;
 
-export const Ratings = [
-  {
+export const Ratings = {
+  PERFECT: {
     value: 5,
     title: 'perfect',
   },
-  {
+  GOOD: {
     value: 4,
     title: 'good',
   },
-  {
+  NOT_BAD: {
     value: 3,
     title: 'not bad',
   },
-  {
+  BADLY: {
     value: 2,
     title: 'badly',
   },
-  {
+  TERRIBLY: {
     value: 1,
     title: 'terribly',
   },
-];
+};

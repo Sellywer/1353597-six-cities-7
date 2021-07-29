@@ -7,10 +7,10 @@ import offerProp from '../../props/offer.prop';
 
 import {AppRoute, CardType} from '../../../const';
 import {setActiveOffer} from '../../../store/action';
-import { sendFavoritePlace } from '../../../store/api-actions';
-import {calcRatingInPercent} from '../../../utils';
+import {sendFavoritePlace} from '../../../store/api-actions';
+import {calcRatingInPercent, uppercaseFirstLetter} from '../../../utils';
 
-function PlaceCard({offer, cardType = CardType.MAIN_TYPE}) {
+function PlaceCard({offer, cardType = CardType.MAIN_TYPE, isMainPage = false}) {
   const {
     id,
     price,
@@ -31,12 +31,17 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE}) {
     dispatch(setActiveOffer(null));
   };
 
+  const handleMouseNearOffer = () => {
+    isMainPage = false;
+  };
+
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
   return (
     <article className={`${articleClassName} place-card`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={isMainPage ? handleMouseEnter : handleMouseNearOffer}
+      onMouseLeave={isMainPage ? handleMouseLeave : handleMouseNearOffer}
+
     >
       {isPremium ?
         <div className="place-card__mark">
@@ -47,7 +52,7 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE}) {
           <img
             className="place-card__image"
             src={previewImage}
-            style={{width: {imgWidth}, height: {imgHeight}}} alt="Place"
+            width = {imgWidth} height = {imgHeight} alt="Place"
           />
         </Link>
       </div>
@@ -84,7 +89,7 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE}) {
             {offer.title}
           </Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{uppercaseFirstLetter(type)}</p>
       </div>
     </article>
   );
@@ -100,6 +105,8 @@ PlaceCard.propTypes = {
     imgWidth: PropTypes.string,
     imgHeight: PropTypes.string,
   }).isRequired,
+  isMainPage: PropTypes.bool,
+
 };
 
 export default PlaceCard;

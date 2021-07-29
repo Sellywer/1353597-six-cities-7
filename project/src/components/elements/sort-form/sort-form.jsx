@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getSortType} from '../../../store/ui/selectors';
 
 import {changeSortType} from '../../../store/action';
-import { SortTypes } from '../../../const';
+import {SortType} from '../../../const';
 import SortItem from '../sort-item/sort-item';
 
 function SortForm() {
@@ -37,7 +37,7 @@ function SortForm() {
       <ul className={`places__options places__options--custom
       ${isSortListOpen && 'places__options--opened'}`}
       >
-        {Object.values(SortTypes).map((sort) => (
+        {Object.values(SortType).map((sort) => (
           <SortItem
             key={sort}
             isActive={sortType === sort}

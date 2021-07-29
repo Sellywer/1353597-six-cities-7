@@ -5,7 +5,7 @@ import {Ratings} from '../../../const';
 function RatingList({rating, setRating }) {
   return (
     <div className="reviews__rating-form form__rating">
-      {(Ratings).map(({value, title}) => (
+      {Object.values(Ratings).map(({value, title}) => (
         <React.Fragment key={value}>
           <input
             className="form__rating-input visually-hidden"

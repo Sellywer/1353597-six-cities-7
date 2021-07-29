@@ -4,10 +4,10 @@ import {useSelector} from 'react-redux';
 import {getOffers} from '../../../store/data/selectors';
 
 import Header from '../../elements/header/header';
-import FavoritesList from '../../elements/favorites/favorites-list';
-import FavoritesEmpty from '../../elements/favorites/favorites-empty';
+import FavoritesList from '../../elements/favorites-list/favorites-list';
+import FavoritesEmpty from '../../elements/favorites-empty/favorites-empty';
 
-function PageFavorites() {
+function Favorites() {
 
   const offers = useSelector(getOffers);
 
@@ -48,4 +48,4 @@ function PageFavorites() {
   );
 }
 
-export default PageFavorites;
+export default Favorites;
