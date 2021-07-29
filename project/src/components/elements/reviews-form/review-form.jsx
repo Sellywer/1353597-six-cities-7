@@ -19,7 +19,7 @@ export function ReviewForm(props) {
 
   const {id} = props;
   const dispatch = useDispatch();
-  const isCommentSend = useSelector(getCommentSendingStatus);
+  const isCommentSent = useSelector(getCommentSendingStatus);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -34,11 +34,11 @@ export function ReviewForm(props) {
   };
 
   useEffect(() => {
-    if (isCommentSend) {
+    if (isCommentSent) {
       setComment('');
       setRating(0);
     }
-  }, [isCommentSend]);
+  }, [isCommentSent]);
 
   return (
     <form

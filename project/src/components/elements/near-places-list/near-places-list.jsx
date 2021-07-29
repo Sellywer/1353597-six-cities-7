@@ -5,7 +5,7 @@ import offerProp from '../../props/offer.prop';
 import PlaceCard from '../place-card/place-card';
 import {CardType} from '../../../const';
 
-function NearPlacesList({ nearOffers }) {
+function NearPlacesList({nearOffers}) {
   return (
     <div className="near-places__list places__list">
       {

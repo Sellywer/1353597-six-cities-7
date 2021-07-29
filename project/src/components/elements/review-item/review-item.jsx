@@ -8,7 +8,7 @@ const reviewDate = (date) => new Date(date).toLocaleDateString('en-US', {
   month: 'long',
 });
 
-function ReviewsItem(props) {
+function ReviewItem(props) {
 
   const {review} = props;
 
@@ -45,8 +45,8 @@ function ReviewsItem(props) {
   );
 }
 
-ReviewsItem.propTypes = {
+ReviewItem.propTypes = {
   review: reviewProp,
 };
 
-export default ReviewsItem;
+export default ReviewItem;

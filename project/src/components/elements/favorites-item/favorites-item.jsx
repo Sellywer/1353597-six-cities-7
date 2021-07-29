@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import offerProp from '../../props/offer.prop';
 
-import PlaceCard from './../place-card/place-card';
+import PlaceCard from '../place-card/place-card';
 
 import {CardType} from '../../../const';
 

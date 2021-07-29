@@ -8,7 +8,6 @@ import CitiesList from '../cities-list/cities-list';
 
 function MainEmpty() {
   const locations = useSelector(getCity);
-
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -26,7 +25,7 @@ function MainEmpty() {
                 <b className="cities__status">No places to stay available</b>
                 <p className="cities__status-description">
                   We could not find any property available at the moment in
-                  Dusseldorf
+                  {locations}
                 </p>
               </div>
             </section>

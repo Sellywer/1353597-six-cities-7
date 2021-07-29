@@ -8,7 +8,6 @@ import {
   changeCommentSendingStatus,
   loadFavorites,
   updateFavorites
-  //setRoomLoadingStatus
 } from '../action';
 
 const initialState = {
@@ -20,7 +19,7 @@ const initialState = {
   areReviewsLoaded: false,
   areLoadedOffersNearby: false,
   offersNearby: [],
-  isCommentSend: false,
+  isCommentSent: false,
 };
 
 const data = createReducer(initialState, (builder) => {
@@ -52,17 +51,8 @@ const data = createReducer(initialState, (builder) => {
       state.offersNearby = action.payload;
     })
     .addCase(changeCommentSendingStatus, (state, action) => {
-      state.isCommentSend = action.payload;
+      state.isCommentSent = action.payload;
     });
-  /*  .addCase(setRoomLoadingStatus, (state, action) => {
-      state.isOfferLoaded = action.payload;
-    }); */
-  /*  .addCase(setRoomLoadingStatus, (state, action) => {
-      state.isOfferLoaded = action.payload;
-    }); */
-  /*  .addCase(хз, (state, action) => {
-      state.areLoadedOffersNearby = action.payload;
-    }); */
 });
 
 export {data};

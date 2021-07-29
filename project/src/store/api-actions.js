@@ -1,22 +1,27 @@
 import {loadFavorites, updateFavorites, updateReviews, loadOffers, loadOffer, loadReviews, loadOffersNearby, requireAuthorization, redirectToRoute, makeLogout, setUser } from './action';
 import {AuthorizationStatus, APIRoute, AppRoute} from '../const';
 import {adaptOfferToClient, adaptCommentToClient} from '../adapter/adapter';
+import { NameSpace } from './root-reducer';
 
 export const fetchFavoriteList = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.FAVORITES)
+  api.get(APIRoute.FAVORITE)
     .then(({data}) => {
       dispatch(loadFavorites(data.map((offer) => adaptOfferToClient(offer)),
       ));
     })
 );
 
-export const sendFavoritePlace = (id, status) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.FAVORITES}/${id}/${status}`)
+export const sendFavoritePlace = (id, status) => (dispatch, getState, api) => {
+  const authStatus = getState()[NameSpace.USER].authorizationStatus;
+  if (authStatus !== AuthorizationStatus.AUTH) {
+    dispatch(redirectToRoute(AppRoute.SIGN_IN));
+  }
+  api.post(`${APIRoute.FAVORITE}/${id}/${status}`)
     .then(({data}) => {
       dispatch(updateFavorites(adaptOfferToClient(data)));
       dispatch(loadOffer(adaptOfferToClient(data)));
-    })
-);
+    });
+};
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -63,7 +68,10 @@ export const postComment = (id, {comment, rating}) => (dispatch, _getState, api)
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(({data}) => {
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+      dispatch(setUser(data));
+    })
     .catch(() => {})
 );
 

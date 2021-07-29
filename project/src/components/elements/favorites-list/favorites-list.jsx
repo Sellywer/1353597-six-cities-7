@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import offerProp from '../../props/offer.prop';
-import FavoritesItem from './favorites-item';
+import FavoritesItem from '../favorites-item/favorites-item';
 
 function FavoritesList({favoritesOffers}) {
 
