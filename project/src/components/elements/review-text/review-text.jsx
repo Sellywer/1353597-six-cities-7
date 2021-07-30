@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {CommentLength} from '../../../const';
+
 export function ReviewText({comment, setComment}) {
 
   const commentChange = (evt) => {
@@ -15,8 +17,8 @@ export function ReviewText({comment, setComment}) {
       placeholder="Tell how was your stay, what you like and what can be improved"
       value={comment}
       onChange={commentChange}
-      minLength={50}
-      maxLength={300}
+      minLength={CommentLength.MIN}
+      maxLength={CommentLength.MAX}
     />
   );
 }

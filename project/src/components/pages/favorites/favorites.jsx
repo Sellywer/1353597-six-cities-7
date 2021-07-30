@@ -1,11 +1,14 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 import {getOffers} from '../../../store/data/selectors';
 
 import Header from '../../elements/header/header';
 import FavoritesList from '../../elements/favorites-list/favorites-list';
 import FavoritesEmpty from '../../elements/favorites-empty/favorites-empty';
+
+import {AppRoute } from '../../../const';
 
 function Favorites() {
 
@@ -44,6 +47,17 @@ function Favorites() {
           </section>
         </div>
       </main>
+      <footer className="footer container">
+        <Link className="footer__logo-link" to={AppRoute.MAIN}>
+          <img
+            className="footer__logo"
+            src="img/logo.svg"
+            alt="6 cities logo"
+            width="64"
+            height="33"
+          />
+        </Link>
+      </footer>
     </div>
   );
 }

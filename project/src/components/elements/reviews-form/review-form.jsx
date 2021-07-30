@@ -7,15 +7,14 @@ import {postComment} from '../../../store/api-actions';
 import ReviewText from '../review-text/review-text';
 import RatingList from '../rating-list/rating-list';
 
-const MIN_CHARS_COUNT = 50;
-const MAX_CHARS_COUNT = 300;
+import {CommentLength} from '../../../const';
 
 export function ReviewForm(props) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  const isButtonDisabled = rating === null || comment.length < MIN_CHARS_COUNT
-  || comment.length > MAX_CHARS_COUNT;
+  const isButtonDisabled = rating === null || comment.length < CommentLength.MIN
+  || comment.length > CommentLength.MAX;
 
   const {id} = props;
   const dispatch = useDispatch();
@@ -53,7 +52,7 @@ export function ReviewForm(props) {
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set {' '}
-          <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{CommentLength.MIN} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"

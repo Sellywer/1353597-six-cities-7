@@ -47,7 +47,12 @@ export const CardType = {
   },
 };
 
-export const QUANTITY_OF_OFFERS_NEARBY = 3;
+export const MAX_ROOM_IMAGES = 6;
+
+export const CommentLength = {
+  MIN: 50,
+  MAX: 300,
+};
 
 export const CITIES = [
   'Paris',

@@ -48,13 +48,11 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, isMainPage = false}) {
           <span>Premium</span>
         </div> : ''}
       <div className={`${imgWrapperClassName} place-card__image-wrapper`}>
-        <Link to={{ pathname: generatePath(AppRoute.ROOM, { id })}}>
-          <img
-            className="place-card__image"
-            src={previewImage}
-            width = {imgWidth} height = {imgHeight} alt="Place"
-          />
-        </Link>
+        {isMainPage ?
+          <Link to={{ pathname: generatePath(AppRoute.ROOM, { id })}}>
+            <img className="place-card__image" src={previewImage} width = {imgWidth} height = {imgHeight} alt="Place" />
+          </Link> :
+          <img className="place-card__image" src={previewImage} width = {imgWidth} height = {imgHeight} alt="Place" />}
       </div>
       <div className={`${cardInfoClassName} place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -85,9 +83,13 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, isMainPage = false}) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={{ pathname: generatePath(AppRoute.ROOM, { id }), state: id }}>
-            {offer.title}
-          </Link>
+          {isMainPage ?
+            <Link to={{ pathname: generatePath(AppRoute.ROOM, {id}), state: id }}>
+              {offer.title}
+            </Link> :
+            <p>
+              {offer.title}
+            </p>}
         </h2>
         <p className="place-card__type">{uppercaseFirstLetter(type)}</p>
       </div>
