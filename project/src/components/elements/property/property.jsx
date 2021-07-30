@@ -5,9 +5,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getAuthorizationStatus} from '../../../store/user/selectors';
 import {getOffers, getReviews, getNearbyOffers} from '../../../store/data/selectors';
 import { sendFavoritePlace } from '../../../store/api-actions';
-import { redirectToRoute } from '../../../store/action';
 import Map from '../../map/map';
-import {AuthorizationStatus, AppRoute } from '../../../const';
+import {AuthorizationStatus, MAX_ROOM_IMAGES } from '../../../const';
 
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import NearPlaces from '../../elements/near-places/near-places';
@@ -15,9 +14,6 @@ import ReviewsList from '../review-list/reviews-list';
 import ReviewForm from '../reviews-form/review-form';
 
 import {calcRatingInPercent, uppercaseFirstLetter} from '../../../utils';
-import { getActiveOfferId } from '../../../store/ui/selectors';
-
-const MAX_ROOM_IMAGES = 6;
 
 function Property() {
 
@@ -25,12 +21,11 @@ function Property() {
   const reviews = useSelector(getReviews);
   const offersNearby = useSelector(getNearbyOffers);
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const activeCard = useSelector(getActiveOfferId);
 
   const dispatch = useDispatch();
 
   const GetId = () => {
-    const { id } = useParams();
+    const {id} = useParams();
     return Number(id);
   };
 
@@ -79,9 +74,7 @@ function Property() {
                     : 'property__bookmark-button button'
                 }
                 type="button"
-                onClick={authorizationStatus === AuthorizationStatus.AUTH
-                  ? handleButtonClick
-                  : () => dispatch(redirectToRoute(AppRoute.SING_IN))}
+                onClick={handleButtonClick}
               >
                 <svg className="property__bookmark-icon"
                   width="31" height="33"
@@ -153,11 +146,7 @@ function Property() {
           </div>
         </div>
         <section className="property__map map">
-          <Map city={offers[0].city} offers={[offer, ...offersNearby]}
-            onMouseEnter={() => {
-              activeCard(offer.id);
-            }}
-          />
+          <Map city={offers[0].city} offers={[offer, ...offersNearby]} activeCard = {offer} />
         </section>
       </section>
       <div className="container">

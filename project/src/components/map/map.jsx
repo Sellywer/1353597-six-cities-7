@@ -33,7 +33,7 @@ function Map(props) {
     const markers = leaflet.layerGroup();
     if (map) {
       markers.addTo(map);
-      offers.forEach(({ location: { latitude, longitude }, id }) => {
+      offers.forEach(({ location: {latitude, longitude}, id }) => {
         leaflet
           .marker({
             lat: latitude,

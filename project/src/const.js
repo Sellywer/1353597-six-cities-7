@@ -47,7 +47,12 @@ export const CardType = {
   },
 };
 
-export const QUANTITY_OF_OFFERS_NEARBY = 3;
+export const MAX_ROOM_IMAGES = 6;
+
+export const CommentLength = {
+  MIN: 50,
+  MAX: 300,
+};
 
 export const CITIES = [
   'Paris',
@@ -88,4 +93,9 @@ export const Ratings = {
     value: 1,
     title: 'terribly',
   },
+};
+
+export const ToastConfig = {
+  WITH_TIMEOUT: true,
+  WITHOUT_TIMEOUT: false,
 };
