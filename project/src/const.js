@@ -94,3 +94,8 @@ export const Ratings = {
     title: 'terribly',
   },
 };
+
+export const ToastConfig = {
+  WITH_TIMEOUT: true,
+  WITHOUT_TIMEOUT: false,
+};

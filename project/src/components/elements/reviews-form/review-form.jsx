@@ -6,26 +6,32 @@ import {getCommentSendingStatus} from '../../../store/data/selectors';
 import {postComment} from '../../../store/api-actions';
 import ReviewText from '../review-text/review-text';
 import RatingList from '../rating-list/rating-list';
-
+import {toast} from '../../../toast';
 import {CommentLength} from '../../../const';
 
-export function ReviewForm(props) {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
-
-  const isButtonDisabled = rating === null || comment.length < CommentLength.MIN
-  || comment.length > CommentLength.MAX;
-
-  const {id} = props;
+export function ReviewForm({id}) {
   const dispatch = useDispatch();
   const isCommentSent = useSelector(getCommentSendingStatus);
 
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const [isSending, setSendingStatus] = useState(false);
+
+  const isButtonDisabled = rating === null || comment.length < CommentLength.MIN
+  || comment.length > CommentLength.MAX || isSending;
+
+  const errorMessage = () => {
+    toast('Комментарий не отправлен, проверьте доступ к интернету');
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setSendingStatus(true);
 
     dispatch(postComment(
       id,
       {comment, rating},
+      errorMessage,
     ));
 
     setRating(0);
@@ -47,8 +53,8 @@ export function ReviewForm(props) {
       onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <RatingList rating={rating} setRating={setRating} />
-      <ReviewText comment={comment} setComment={setComment} />
+      <RatingList rating={rating} setRating={setRating} disabled={isSending}/>
+      <ReviewText comment={comment} setComment={setComment} disabled={isSending}/>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set {' '}
