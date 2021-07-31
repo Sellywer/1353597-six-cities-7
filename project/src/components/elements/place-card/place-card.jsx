@@ -8,7 +8,7 @@ import offerProp from '../../props/offer.prop';
 import {AppRoute, CardType} from '../../../const';
 import {setActiveOffer} from '../../../store/action';
 import {sendFavoritePlace} from '../../../store/api-actions';
-import {calcRatingInPercent, uppercaseFirstLetter} from '../../../utils';
+import {getRatingInPercent, uppercaseFirstLetter} from '../../../utils';
 
 function PlaceCard({offer, cardType = CardType.MAIN_TYPE, isMainPage = false}) {
   const {
@@ -78,7 +78,7 @@ function PlaceCard({offer, cardType = CardType.MAIN_TYPE, isMainPage = false}) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: calcRatingInPercent(rating)}}></span>
+            <span style={{width: getRatingInPercent(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import {SortType} from './const';
 
-export const calcRatingInPercent = (rating) => `${rating / 5 * 100}%`;
+export const getRatingInPercent = (rating) => `${rating / 5 * 100}%`;
 
 export const uppercaseFirstLetter = (str) =>
   str.charAt(0).toUpperCase() + str.slice(1);

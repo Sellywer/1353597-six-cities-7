@@ -48,6 +48,7 @@ export const CardType = {
 };
 
 export const MAX_ROOM_IMAGES = 6;
+export const MAX_REVIEWS = 10;
 
 export const CommentLength = {
   MIN: 50,
@@ -69,8 +70,6 @@ export const SortType = {
   PRICE_HIGH: 'Price: high to low',
   TOP_RATED: 'Top rated first',
 };
-
-export const DEFAULT_SORT_TYPE = SortType.POPULAR;
 
 export const Ratings = {
   PERFECT: {

@@ -3,7 +3,6 @@ import {createAction} from '@reduxjs/toolkit';
 export const ActionType = {
   CHANGE_CITY: 'ui/changeCity',
   CHANGE_SORT_TYPE: 'ui/changeSortType',
-  SET_ACTIVE_OFFER: 'ui/setActiveOffer',
 
   LOAD_OFFERS: 'data/loadOffers',
   LOAD_OFFER: 'data/loadOffer',
@@ -14,6 +13,7 @@ export const ActionType = {
   CHANGE_COMMENT_SENDING_STATUS: 'data/changeCommentSendingStatus',
   LOAD_FAVORITES: 'data/loadFavorites',
   UPDATE_FAVORITES: 'data/updateFavorites',
+  SET_ACTIVE_OFFER: 'data/setActiveOffer',
 
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',

@@ -13,17 +13,14 @@ import PageNotFound from '../page-not-found/page-not-found';
 function Offer() {
 
   const dispatch = useDispatch();
+
   const offers = useSelector(getOffers);
   const reviews = useSelector(getReviews);
   const offersNearby = useSelector(getNearbyOffers);
   const offersFavorite = useSelector(getFavorites);
+  const params = useParams();
 
-  const GetId = () => {
-    const { id } = useParams();
-    return Number(id);
-  };
-
-  const roomId = GetId();
+  const roomId = +params.id;
 
   const offer = offers.find((item) => item.id === roomId);
 

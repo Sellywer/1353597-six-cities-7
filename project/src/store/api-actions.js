@@ -2,7 +2,7 @@ import {loadFavorites, updateFavorites, updateReviews, loadOffers, loadOffer, lo
 import {AuthorizationStatus, APIRoute, AppRoute, ToastConfig} from '../const';
 import {adaptOfferToClient, adaptCommentToClient} from '../adapter/adapter';
 import {NameSpace} from './root-reducer';
-import {toast} from '../toast';
+import {showToast} from '../show-toast';
 
 export const fetchFavoriteList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FAVORITE)
@@ -22,13 +22,13 @@ export const sendFavoritePlace = (id, status) => (dispatch, getState, api) => {
       dispatch(updateFavorites(adaptOfferToClient(data)));
       dispatch(loadOffer(adaptOfferToClient(data)));
     })
-    .catch(() => toast('Предложение в избранное не добавлено. Пройдите авторизацию или проверьте соединение, перезагрузите страницу'));
+    .catch(() => showToast('Предложение в избранное не добавлено. Пройдите авторизацию или проверьте соединение, перезагрузите страницу'));
 };
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
     .then(({data}) => dispatch(loadOffers(data.map(adaptOfferToClient))))
-    .catch(() => toast('Ошибка подключения. Проверьте соединение или перезагрузите страницу', ToastConfig.WITHOUT_TIMEOUT))
+    .catch(() => showToast('Ошибка подключения. Проверьте соединение или перезагрузите страницу', ToastConfig.WITHOUT_TIMEOUT))
 );
 
 export const fetchOffer = (id) => (dispatch, _getState, api) => (
@@ -82,12 +82,15 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => {
-      dispatch(setUser(data));
       localStorage.setItem('token', data.token);
+      dispatch(setUser(data));
     })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
-    .catch(() => toast('Ошибка при авторизации. Проверьте соединение или перезагрузите страницу'))
+    .then(() => {
+      dispatch(fetchOffers());
+    })
+    .catch(() => showToast('Ошибка при авторизации. Проверьте соединение или перезагрузите страницу'))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
@@ -95,6 +98,6 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(makeLogout()))
     .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
-    .catch(() => toast('Ошибка при выходе из аккаунта. Проверьте соединение или перезагрузите страницу'))
+    .catch(() => showToast('Ошибка при выходе из аккаунта. Проверьте соединение или перезагрузите страницу'))
 );
 

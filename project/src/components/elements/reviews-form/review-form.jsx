@@ -6,7 +6,7 @@ import {getCommentSendingStatus} from '../../../store/data/selectors';
 import {postComment} from '../../../store/api-actions';
 import ReviewText from '../review-text/review-text';
 import RatingList from '../rating-list/rating-list';
-import {toast} from '../../../toast';
+import {showToast} from '../../../show-toast';
 import {CommentLength} from '../../../const';
 
 export function ReviewForm({id}) {
@@ -17,11 +17,11 @@ export function ReviewForm({id}) {
   const [comment, setComment] = useState('');
   const [isSending, setSendingStatus] = useState(false);
 
-  const isButtonDisabled = rating === null || comment.length < CommentLength.MIN
-  || comment.length > CommentLength.MAX || isSending;
+  const isButtonDisabled = rating === 0 || comment.length < CommentLength.MIN
+  || comment.length > CommentLength.MAX;
 
-  const errorMessage = () => {
-    toast('Комментарий не отправлен, проверьте доступ к интернету');
+  const getErrorMessage = () => {
+    showToast('Комментарий не отправлен, проверьте доступ к интернету');
   };
 
   const handleSubmit = (evt) => {
@@ -31,7 +31,7 @@ export function ReviewForm({id}) {
     dispatch(postComment(
       id,
       {comment, rating},
-      errorMessage,
+      getErrorMessage,
     ));
 
     setRating(0);

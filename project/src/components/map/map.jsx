@@ -4,7 +4,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useSelector} from 'react-redux';
 
-import {getActiveOfferId} from '../../store/ui/selectors';
+import {getActiveOfferId} from '../../store/data/selectors';
 
 import offerProp from '../props/offer.prop';
 

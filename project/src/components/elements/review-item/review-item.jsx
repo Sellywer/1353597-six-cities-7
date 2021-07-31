@@ -1,9 +1,9 @@
 import React from 'react';
 import reviewProp from '../../props/review.prop';
 
-import {calcRatingInPercent} from '../../../utils';
+import {getRatingInPercent} from '../../../utils';
 
-const reviewDate = (date) => new Date(date).toLocaleDateString('en-US', {
+const getReviewDate = (date) => new Date(date).toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
 });
@@ -32,14 +32,14 @@ function ReviewItem(props) {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: calcRatingInPercent(rating)}}></span>
+            <span style={{width: getRatingInPercent(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date}>{reviewDate(date)}</time>
+        <time className="reviews__time" dateTime={date}>{getReviewDate(date)}</time>
       </div>
     </li>
   );

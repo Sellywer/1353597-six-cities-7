@@ -2,11 +2,13 @@ import React, {useRef } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { CITIES } from '../../../const';
+import { CITIES, AuthorizationStatus } from '../../../const';
+import {getAuthorizationStatus} from '../../../store/user/selectors';
 
 import {redirectToRoute, changeCity} from '../../../store/action';
 import {login} from '../../../store/api-actions';
 import Header from '../../elements/header/header';
+import Main from '../main/main';
 
 function Login() {
 
@@ -14,6 +16,7 @@ function Login() {
   const loginRef = useRef();
   const passwordRef = useRef();
   const onCityChange = useSelector(changeCity);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -52,6 +55,12 @@ function Login() {
     passwordInput.setCustomValidity(validationMessage);
     passwordInput.reportValidity();
   };
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    return (
+      <Main />
+    );
+  }
 
   return (
     <div className="page page--gray page--login">

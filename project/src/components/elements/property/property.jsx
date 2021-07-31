@@ -1,7 +1,6 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-
 import {getAuthorizationStatus} from '../../../store/user/selectors';
 import {getOffers, getReviews, getNearbyOffers} from '../../../store/data/selectors';
 import { sendFavoritePlace } from '../../../store/api-actions';
@@ -13,7 +12,7 @@ import NearPlaces from '../../elements/near-places/near-places';
 import ReviewsList from '../review-list/reviews-list';
 import ReviewForm from '../reviews-form/review-form';
 
-import {calcRatingInPercent, uppercaseFirstLetter} from '../../../utils';
+import {getRatingInPercent, uppercaseFirstLetter} from '../../../utils';
 
 function Property() {
 
@@ -21,15 +20,11 @@ function Property() {
   const reviews = useSelector(getReviews);
   const offersNearby = useSelector(getNearbyOffers);
   const authorizationStatus = useSelector(getAuthorizationStatus);
-
   const dispatch = useDispatch();
 
-  const GetId = () => {
-    const {id} = useParams();
-    return Number(id);
-  };
+  const params = useParams();
 
-  const roomId = GetId();
+  const roomId = +params.id;
 
   const offer = offers.find((item) => item.id === roomId);
 
@@ -86,7 +81,7 @@ function Property() {
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
-                <span style={{width: calcRatingInPercent(offer.rating)}}></span>
+                <span style={{width: getRatingInPercent(offer.rating)}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="property__rating-value rating__value">{offer.rating}</span>
@@ -146,7 +141,7 @@ function Property() {
           </div>
         </div>
         <section className="property__map map">
-          <Map city={offers[0].city} offers={[offer, ...offersNearby]} activeCard = {offer} />
+          <Map city={offers[0].city} offers={[offer, ...offersNearby]} activeOfferId = {offer} />
         </section>
       </section>
       <div className="container">

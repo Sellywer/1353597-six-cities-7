@@ -1,6 +1,6 @@
-const SHOW_TIME = 5000;
+const SHOW_TIME = 1500;
 
-export const toast = (message, isTimeout = true) => {
+export const showToast = (message, isTimeout = true) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'fixed';

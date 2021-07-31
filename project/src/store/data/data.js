@@ -7,7 +7,8 @@ import {
   loadOffersNearby,
   changeCommentSendingStatus,
   loadFavorites,
-  updateFavorites
+  updateFavorites,
+  setActiveOffer
 } from '../action';
 
 const initialState = {
@@ -20,10 +21,15 @@ const initialState = {
   areLoadedOffersNearby: false,
   offersNearby: [],
   isCommentSent: false,
+  activeOfferId: null,
+
 };
 
 const data = createReducer(initialState, (builder) => {
   builder
+    .addCase(setActiveOffer, (state, action) => {
+      state.activeOfferId = action.payload;
+    })
     .addCase(loadFavorites, (state, action) => {
       state.favorites = action.payload;
     })
@@ -43,6 +49,7 @@ const data = createReducer(initialState, (builder) => {
     .addCase(loadOffer, (state, action) => {
       state.isOfferLoaded = true;
       state.offer = action.payload;
+      state.activeOfferId = action.payload.id;
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;

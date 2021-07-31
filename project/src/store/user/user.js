@@ -16,7 +16,7 @@ const user = createReducer(initialState, (builder) => {
     .addCase(setUser, (state, action) => {
       state.user = action.payload;
     })
-    .addCase(makeLogout, (state, action) => {
+    .addCase(makeLogout, (state) => {
       state.user = {};
       state.authorizationStatus = AuthorizationStatus.NO_AUTH;
     });
